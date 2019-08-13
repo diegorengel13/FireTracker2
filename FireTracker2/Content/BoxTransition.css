@@ -1,0 +1,73 @@
+﻿html,
+body {
+    width: 100%;
+    min-height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+body {
+    background: #607D8B;
+    padding: 2rem 0rem;
+    text-align: center;
+    -webkit-transform: translate(0);
+    -moz-transform: translate(0);
+    -ms-transform: translate(0);
+    -o-transform: translate(0);
+    transform: translate(0);
+}
+
+.ui.right.floated {
+    float: right;
+}
+
+.ui.shape {
+    position: relative;
+    display: inline-block !important;
+    text-align: left;
+   
+}
+@media (max-width:768px) {
+    .login-box, .register-box {
+        width: 90%;
+        margin-top: 20px
+    }
+}
+
+#flip-label {
+    position: absolute;
+    left: calc(50% + 193px);
+    top: 8rem
+    ;
+    visibility: hidden;
+}
+<!---->
+.ui.segment,
+.ui.attached.button {
+    width: 500px !important;
+}
+
+.ui.ribbon.label:after {
+    border-top-color: #9E9E9E;
+}
+
+    .ui.ribbon.label:after:hover {
+        border-top-color: #9E9E9E;
+    }
+
+.ui.segment {
+    visibility: hidden;
+}
+
+.ui.bottom.attached.button {
+    opacity: 1;
+    -webkit-transition: opacity 0.5s ease;
+    -moz-transition: opacity 0.5s ease;
+    -o-transition: opacity 0.5s ease;
+    transition: opacity 0.5s ease;
+}
+
+.ui.bottom.attached.hidden.button {
+    opacity: 0;
+}

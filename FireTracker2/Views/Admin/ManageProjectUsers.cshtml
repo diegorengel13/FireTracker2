@@ -1,0 +1,30 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_NavShare.cshtml";
+}
+
+@using (Html.BeginForm("ManageProjectUsers", "Admin", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.Hidden("ProjectId", (string)ViewBag.ProjectId)
+    <div class="form-group">
+        @Html.Label("Assign Projects", null, htmlAttributes: new { @class = "control-label cold-md-2" })
+
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            @Html.ListBox("ProjectManagers")
+        </div>
+        <div class="col-md-4">
+            @Html.ListBox("Submitters")
+        </div>
+        <div class="col-md-4">
+            @Html.ListBox("Developers")
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <button type="submit" class="btn btn-adn">ASSIGN</button>
+        </div>
+    </div>
+}

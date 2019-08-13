@@ -1,0 +1,51 @@
+﻿@{
+    Layout = "~/Views/Shared/_RegLog.cshtml";
+}
+@{
+    ViewBag.Title = "Log in";
+}
+
+
+@*@using (Html.BeginForm("login","Account",FromMethod.Post)*@
+
+  
+
+<div class="ui shape">
+    <div class="sides">
+        <div class="login-logo">
+            <a href="../../index2.html"><b>Admin</b>LTE</a>
+        </div>
+        <div class='first side active'>
+            <div class='login-box'>
+                <!--Login Box-->
+                <div class='ui top attached segment'>
+                    <div class="login-box-body">
+                        <h2 class='ui center aligned icon header'>
+                            <i class="login-box-msg">Sign in to start your session</i>
+                        </h2>
+                        <div class='ui form'>
+                            @Html.Partial("_LoginPart")
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class='second side '>
+            <div class='login-box'>
+                <div class='ui top attached segment'>
+                    <div class="login-box-body">
+                        <h2 class='ui center aligned icon header'>
+                            <i class="login-box-msg">Register you New Membership</i>
+                        </h2>
+                        <div class='ui form'>
+                            @Html.Partial("_PartialRegister")
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<a class="ui right ribbon label" id="flip-label">
+    Not a member yet?
+</a>

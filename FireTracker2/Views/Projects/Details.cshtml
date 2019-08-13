@@ -1,0 +1,62 @@
+﻿@using FireTracker2.Models
+@using FireTracker2.Helpers
+@model FireTracker2.Models.Project
+
+@{
+    Layout = "~/Views/Shared/_NavShare.cshtml";
+    ViewBag.Title = "Details";
+    var projHelp = new ProjectHelper();
+    var roleHelper = new RoleHelp();
+}
+
+<h2>Project Details and User Assignment</h2>
+<div>
+    <h4>Project</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+    </dl>
+</div>
+@using (Html.BeginForm("ManageProjectUsers", "Admin", FormMethod.Post))
+{
+
+    @Html.AntiForgeryToken()
+    @Html.Hidden("ProjectId", (string)ViewBag.ProjectId)
+   
+    <div class="row">
+        <div class="col-md-4">
+            @Html.DisplayName("Project Managers")
+            @Html.ListBox("ProjectManager", null, htmlAttributes: new { @class = "form-control" })
+        </div>
+        <div class="col-md-4">
+            @Html.DisplayName("Submitters")
+            @Html.ListBox("Submitter", null, htmlAttributes: new { @class = "form-control" })
+        </div>
+        <div class="col-md-4">
+            @Html.DisplayName("Developers")
+            @Html.ListBox("Developer", null, htmlAttributes: new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <button type="submit" class="btn btn-adn">ASSIGN</button>
+        </div>
+    </div>
+}
+
+<p>
+    @Html.ActionLink("Back to Project Index", "Index") |
+    @Html.ActionLink("Manage Projects", "ManageProjects")
+</p>

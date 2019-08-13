@@ -1,0 +1,54 @@
+﻿@{
+    Layout = "~/Views/Shared/_NavShare.cshtml";
+}
+@using FireTracker2.Models
+@using FireTracker2.ViewModels
+@using FireTracker2.Helpers
+@model IEnumerable<Project>
+
+@{
+    var projHelp = new ProjectHelper();
+    var roleHelper = new RoleHelp();
+}
+<h2>Project Index</h2>
+
+<table class="table ">
+    <tr>
+       
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model=> model.Description)
+        </th>
+        <th>
+            @Html.DisplayName("Users On Project")
+        </th>
+
+    </tr>
+
+    @foreach (var item in Model)
+    {
+    <tr>
+
+
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <th>
+            @projHelp.UsersOnProject(item.Id).FirstOrDefault()
+        </th>
+        <td>
+            @Html.ActionLink("Manage User Role", "ManageUserRole", new { projectId = item.Id }) |
+            @Html.ActionLink("Manage Projects", "Details", new { Id = item.Id })
+            @Html.ActionLink("Edit", "Edit", new { Id = item.Id })
+        </td>
+
+    </tr>
+        }
+        @Html.ActionLink("Create Project", "Create", "Projects")
+        @Html.ActionLink("Back to user index", "UserIndex", "Admin")
+    </table>

@@ -1,0 +1,140 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_RegLog.cshtml";
+}
+
+
+    <div class='ui shape'>
+        <div class='sides'>
+            <div class='first side active'>
+                <div class='ui top attached segment'>
+                    <h2 class='ui center aligned icon header'>
+                        <i class='circular inverted blue cloud icon'></i>
+                        <div class='content'>
+                            SomeWebsite
+                        </div>
+                        <div class='sub header'>
+                            Login to your SomeWebsite account
+                        </div>
+                    </h2>
+                    <div class='ui divider'></div>
+                    <h4 class='ui center aligned header'>
+                        Login with &hellip;
+                    </h4>
+                    <div class='ui three buttons'>
+                        <button class="ui labeled facebook icon button">
+                            <i class="facebook icon"></i> Facebook
+                        </button>
+                        <button class="ui labeled twitter icon button">
+                            <i class="twitter icon"></i> Twitter
+                        </button>
+                        <button class="ui labeled google plus icon button">
+                            <i class="google plus icon"></i> Google
+                        </button>
+                    </div>
+                    <div class='ui horizontal divider'>OR</div>
+                    <div class='ui form'>
+                        <div class='field required'>
+                            <label>
+                                Username
+                            </label>
+                            <div class='ui left icon input'>
+                                <input required='true' type='text'>
+                                <i class="grey at icon"></i>
+                            </div>
+                        </div>
+                        <div class='field required'>
+                            <label>
+                                Password
+                            </label>
+                            <input required='true' type='password'>
+                        </div>
+                        <div class='inline field'>
+                            <div class='ui toggle checkbox'>
+                                <input type='checkbox'>
+                                <label>
+                                    Remember me
+                                </label>
+                            </div>
+                        </div>
+                        <div class='ui hidden divider'></div>
+                    </div>
+                </div>
+                <button class='ui bottom attached large primary hidden button' type='submit'>
+                    Login
+                </button>
+            </div>
+            <div class='second side'>
+                <div class='ui top attached segment'>
+                    <h2 class='ui center aligned icon header'>
+                        <i class='horizontally flipped circular inverted green cloud icon'></i>
+                        <div class='content'>
+                            SomeWebsite
+                        </div>
+                        <div class='sub header'>
+                            Register to SomeWebsite
+                        </div>
+                    </h2>
+                    <div class='ui divider'></div>
+                    <div class='ui form'>
+                        <div class='two fields'>
+                            <div class='field required'>
+                                <label>
+                                    First name
+                                </label>
+                                <input required='true' type='text' placeholder='John'>
+                            </div>
+                            <div class='field required'>
+                                <label>
+                                    Last name
+                                </label>
+                                <input required='true' type='text' placeholder='Doe'>
+                            </div>
+                        </div>
+                        <div class='field required'>
+                            <label>
+                                Email
+                            </label>
+                            <input required='true' type='email' placeholder='johndoe@example.com'>
+                        </div>
+                        <div class='field required'>
+                            <label>
+                                Username
+                            </label>
+                            <div class='ui left icon input'>
+                                <input required='true' type='text' placeholder='JohnDoe'>
+                                <i class="grey at icon"></i>
+                            </div>
+                        </div>
+                        <div class='field required'>
+                            <label>
+                                Password
+                            </label>
+                            <input required='true' type='password'>
+                        </div>
+                        <div class='field required'>
+                            <label>
+                                Confirm your password
+                            </label>
+                            <input required='true' type='password'>
+                        </div>
+                        <div class='inline field'>
+                            <div class='ui checkbox'>
+                                <input type='checkbox'>
+                                <label>
+                                    I have read the <a href="#">terms and conditions</a>
+                                </label>
+                            </div>
+                        </div>
+                        <div class='ui hidden divider'></div>
+                    </div>
+                </div>
+                <div class='ui bottom attached large green hidden button'>
+                    Create my account
+                </div>
+            </div>
+        </div>
+    </div>
+<a class="ui right ribbon label" id="flip-label">
+    Not a member yet?
+</a>
