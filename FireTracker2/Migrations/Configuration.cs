@@ -103,6 +103,33 @@ using Microsoft.AspNet.Identity;
             #endregion
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data.
+            context.TicketPriorities.AddOrUpdate(t => t.Name,
+                new FireTracker.Models.TicketPriority { Name = "Immediate", Description = "Ticket Requires Immediate Action"},
+                new FireTracker.Models.TicketPriority { Name = "High", Description = "Ticket Requires Attention ASAP" },
+                new FireTracker.Models.TicketPriority { Name = "Medium", Description = "Ticket needs assesing but no immediate action required" },
+                new FireTracker.Models.TicketPriority { Name = "Low", Description = "Ticket Does not require any imediate action" },
+                new FireTracker.Models.TicketPriority { Name = "None", Description = "No action required, ticket is only for update or information" }
+                );
+
+            context.TicketStatus.AddOrUpdate(t => t.Name,
+                new FireTracker.Models.TicketStatus { Name = "Submitted/Unassigned" },
+                new FireTracker.Models.TicketStatus { Name = "Completed" },
+                new FireTracker.Models.TicketStatus { Name = "In Progress" },
+                new FireTracker.Models.TicketStatus { Name = "Submitted/Assigned" }
+                );
+            context.TicketTypes.AddOrUpdate(t => t.Name,
+                new FireTracker.Models.TicketTypes
+                {
+                    Name = "Bug",
+                    Description = "An Error has occured in the project which has resulted in the application crashing or user is seeing an error message"
+                },
+                new FireTracker.Models.TicketTypes { Name = "Defect", Description = "information not being displayed correctly or functions are miscalculating" },
+                new FireTracker.Models.TicketTypes { Name = "Function Request", Description = "A request for a new function or feature has been requested" },
+                new FireTracker.Models.TicketTypes { Name = "Complaint", Description = "A general complaint has been made on the application" },
+                new FireTracker.Models.TicketTypes { Name = "Documentation Request", Description = "Request of documents on the application has been made" }
+                );
+            context.SaveChanges();
+
         }
     }
 }

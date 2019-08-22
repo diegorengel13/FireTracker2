@@ -4,11 +4,7 @@ using System.Web;
 
 namespace FireTracker2.Models
 {
-    public class LandingViewModel
-    {
-        public RegisterViewModel RegisterVM { get; set; }
-        public LoginViewModel LoginVM { get; set; }
-    }
+   
     public class ExternalLoginConfirmationViewModel
     {
         [Required]

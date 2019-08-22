@@ -21,13 +21,6 @@ body {
 .ui.right.floated {
     float: right;
 }
-
-.ui.shape {
-    position: relative;
-    display: inline-block !important;
-    text-align: left;
-   
-}
 @media (max-width:768px) {
     .login-box, .register-box {
         width: 90%;
@@ -37,8 +30,8 @@ body {
 
 #flip-label {
     position: absolute;
-    left: calc(50% + 193px);
-    top: 8rem
+    left: calc(50% + 198px);
+    top: 9rem
     ;
     visibility: hidden;
 }

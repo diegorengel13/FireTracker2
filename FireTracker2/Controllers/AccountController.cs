@@ -56,21 +56,7 @@ namespace FireTracker2.Controllers
                 _userManager = value;
             }
         }
-        public ActionResult Index()
-        {
-            var model = new LandingViewModel();
-          
-            return View(model);
-        }
-        public ActionResult LogRegAct(LandingViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                return View("Login", model);
-            }
-
-            throw new Exception("My Model state is not valid");
-        }
+     
 
         //
         // GET: /Account/Login
@@ -92,7 +78,16 @@ namespace FireTracker2.Controllers
             {
                 string name = model.Email;
                 string pwd = model.Password;
-                return View(model);
+                if(name == null)
+                {
+                    ModelState.AddModelError("", "Enter a valid Email.");
+
+                }
+                if(pwd == null)
+                {
+                    ModelState.AddModelError("", "Password is Incorrect please enter again");
+                }
+                return RedirectToAction("Login", "Account");
             }
 
             // This doesn't count login failures towards account lockout
@@ -109,7 +104,7 @@ namespace FireTracker2.Controllers
                 case SignInStatus.Failure:
                 default:
                     ModelState.AddModelError("", "Invalid login attempt.");
-                    return View(model);
+                    return RedirectToAction("Login", "Account");
             }
         }
 
@@ -155,7 +150,13 @@ namespace FireTracker2.Controllers
                     return View(model);
             }
         }
+        [ChildActionOnly]
+        public PartialViewResult GetUser()
+        {
+            var userId = User.Identity.GetUserId();
 
+            return PartialView("_LoginPartial",db.Users.Find(userId));
+        }
         //
         // GET: /Account/Register
         [AllowAnonymous]
@@ -187,29 +188,46 @@ namespace FireTracker2.Controllers
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                    var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                    await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
                     return RedirectToAction("Login", "Account");
                 }
-
-                
-              
-                
                 AddErrors(result);
                 return RedirectToAction("Log In");
-
-                
             }
 
             // If we got this far, something failed, redisplay form
             return View(model);
         }
-
+        [HttpGet]
+        [AllowAnonymous]
+        public ActionResult ResendEmailConfirmation()
+        {
+            return View();
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ResendEmailConfirmation(ForgotPasswordViewModel model)
+        {
+            var user = await UserManager.FindByNameAsync(model.Email);
+            if (user != null)
+            {
+                string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                var callbackUrl = Url.Action("confirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                await UserManager.SendEmailAsync(user.Id, "Confirm Account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+            }
+            return RedirectToAction("ConfrimationSent");
+        }
+        public ActionResult ConfirmationSent()
+        {
+            return View();
+        }
         //
         // GET: /Account/ConfirmEmail
         [AllowAnonymous]
@@ -241,7 +259,7 @@ namespace FireTracker2.Controllers
             if (ModelState.IsValid)
             {
                 var user = await UserManager.FindByNameAsync(model.Email);
-                if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
+                if (user == null)
                 {
                     // Don't reveal that the user does not exist or is not confirmed
                     return View("ForgotPasswordConfirmation");
@@ -249,10 +267,10 @@ namespace FireTracker2.Controllers
 
                 // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                 // Send an email with this link
-                // string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-                // var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
-                // await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                // return RedirectToAction("ForgotPasswordConfirmation", "Account");
+                string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
+                var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
 
             // If we got this far, something failed, redisplay form

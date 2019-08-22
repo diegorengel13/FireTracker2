@@ -9,24 +9,24 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "Create","Tickets")
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.AssignedToUser.FirstName)
+            @Html.DisplayNameFor(model => model.AssignedToUser)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.OwnerUser.FirstName)
+            @Html.DisplayNameFor(model => model.OwnerUser)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Project.Name)
+            @Html.DisplayNameFor(model => model.Project)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.TicketPriority.Name)
+            @Html.DisplayNameFor(model => model.TicketPriority)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.TicketStatus.Name)
+            @Html.DisplayNameFor(model => model.TicketStatus)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Title)
@@ -41,7 +41,7 @@
             @Html.DisplayNameFor(model => model.Updated)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.TicketTypeId)
+            @Html.DisplayNameFor(model => model.TicketTypes)
         </th>
         <th></th>
     </tr>
@@ -77,7 +77,7 @@
                 @Html.DisplayFor(modelItem => item.Updated)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.TicketTypeId)
+                @Html.DisplayFor(modelItem => item.TicketTypes.Name)
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |

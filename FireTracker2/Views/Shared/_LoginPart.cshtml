@@ -1,8 +1,7 @@
 ﻿@using FireTracker2.Models
 @model LoginViewModel
 
-<link href="~/Content/bootstrap.css" rel="stylesheet" />
-<link href="~/Content/AdminLTE.min.css" rel="stylesheet" />
+
 
 
 @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
@@ -34,7 +33,7 @@
         </div>
         <!-- /.col -->
     </div>
-
+  
 }
 <div class='ui horizontal divider'>OR</div>
 <section id="socialLoginForm">

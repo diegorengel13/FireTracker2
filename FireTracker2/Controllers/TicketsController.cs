@@ -19,6 +19,12 @@ namespace FireTracker2.Controllers
         private RoleHelp roleHelp = new RoleHelp();
         private ApplicationDbContext db = new ApplicationDbContext();
 
+
+        public ActionResult Dashboard()
+        {
+            var tickets = db.Tickets.ToList();
+            return View(tickets);
+        }
         // GET: Tickets
         public ActionResult Index()
         {
@@ -61,7 +67,7 @@ namespace FireTracker2.Controllers
             }
             return View(ticket);
         }
-        [Authorize(Roles ="Submitter")]
+        [Authorize(Roles = "Submitter, Admin")]
         // GET: Tickets/Create
         public ActionResult Create()
         {
@@ -71,7 +77,7 @@ namespace FireTracker2.Controllers
             ViewBag.ProjectId = new SelectList(myProjects, "Id", "Name");
             ViewBag.TicketPriorityId = new SelectList(db.TicketPriorities, "Id", "Name");
             ViewBag.TicketTypeId = new SelectList(db.TicketTypes, "Id", "Name");
-            return View();
+            return View("Create");
         }
 
         // POST: Tickets/Create
@@ -85,19 +91,14 @@ namespace FireTracker2.Controllers
             {
                 ticket.Created = DateTime.Now;
                 ticket.OwnerUserId = User.Identity.GetUserId();
-                ticket.TicketStatusId = db.TicketStatus.FirstOrDefault(t => t.Name == "New / UnAssigned").Id; 
+                ticket.TicketStatusId = db.TicketStatus.FirstOrDefault(t => t.Name == "Submitted/Unassigned").Id; 
                 db.Tickets.Add(ticket);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
-       
-            ViewBag.ProjectId = new SelectList(db.Projects, "Id", "Name", ticket.ProjectId);
-            ViewBag.TicketPriorityId = new SelectList(db.TicketPriorities, "Id", "Name", ticket.TicketPriorityId);
-            ViewBag.TicketTypeId = new SelectList(db.TicketTypes, "Id", "Name", ticket.TicketStatusId);
-            return View(ticket);
+            return View("Index");
         }
-
+        [Authorize(Roles = "Admin, ProjectManager, Developer")]
         // GET: Tickets/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -106,34 +107,14 @@ namespace FireTracker2.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Ticket ticket = db.Tickets.Find(id);
-            if (ticket == null)
+            if(ticket == null)
             {
                 return HttpNotFound();
             }
-            var allowed = false;
-
-         
-            var userId = User.Identity.GetUserId();
-
-            if (User.IsInRole("Developer") && ticket.AssignedToUserId == userId)
-                allowed = true;
-            else if (User.IsInRole("Submitter") && ticket.OwnerUserId == userId)
-                allowed = true;
-            else if (User.IsInRole("ProjectManager"))
-            {
-                //if (db.Users.Find(userId).Projects.SelectMany(p => p.Tickets).Select(t => new { id = t.Id }).Contains(ticket.Id)) ;
-                //if this ticket is on a project that i am on then i can edit ticket
-            }
-            else
-            {
-                allowed = true;
-            }
             if (TicketHelper.TicketIsEditableByUser(ticket))
             {
-
-
-                ViewBag.AssignedToUserId = new SelectList(db.Users, "Id", "FirstName", ticket.AssignedToUserId);
-                ViewBag.TicketTypeId = new SelectList(db.TicketTypes, "Id", "FirstName", ticket.OwnerUserId);
+                ViewBag.AssignedToUserId = new SelectList(db.Users, "Id", "FullName", ticket.AssignedToUserId);
+                ViewBag.TicketTypeId = new SelectList(db.TicketTypes, "Id", "Name", ticket.OwnerUserId);
                 ViewBag.ProjectId = new SelectList(db.Projects, "Id", "Name", ticket.ProjectId);
                 ViewBag.TicketPriorityId = new SelectList(db.TicketPriorities, "Id", "Name", ticket.TicketPriorityId);
                 ViewBag.TicketStatusId = new SelectList(db.TicketStatus, "Id", "Name", ticket.TicketStatusId);
@@ -151,16 +132,17 @@ namespace FireTracker2.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Title,Description,TicketTypeId,TicketPriorityId,TicketStatusId,OwnerUserId,AssignedToUserId")] Ticket ticket)
+        public ActionResult Edit([Bind(Include = "Id,Created,Title,Description,ProjectId,TicketTypeId,TicketPriorityId,TicketStatusId,AssignedToUserId")] Ticket ticket)
         {
             if (ModelState.IsValid)
             {
+                ticket.Updated = DateTime.Now;
                 db.Entry(ticket).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.AssignedToUserId = new SelectList(db.Users, "Id", "FirstName", ticket.AssignedToUserId);
-            ViewBag.OwnerUserId = new SelectList(db.Users, "Id", "FirstName", ticket.OwnerUserId);
+            ViewBag.AssignedToUserId = new SelectList(db.Users, "Id", "FullName", ticket.AssignedToUserId);
+            ViewBag.TicketTypeId = new SelectList(db.TicketTypes, "Id", "Name", ticket.OwnerUserId);
             ViewBag.ProjectId = new SelectList(db.Projects, "Id", "Name", ticket.ProjectId);
             ViewBag.TicketPriorityId = new SelectList(db.TicketPriorities, "Id", "Name", ticket.TicketPriorityId);
             ViewBag.TicketStatusId = new SelectList(db.TicketStatus, "Id", "Name", ticket.TicketStatusId);

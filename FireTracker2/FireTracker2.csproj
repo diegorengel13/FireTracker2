@@ -19,8 +19,8 @@
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
     <IISExpressSSLPort>44327</IISExpressSSLPort>
-    <IISExpressAnonymousAuthentication />
-    <IISExpressWindowsAuthentication />
+    <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
+    <IISExpressWindowsAuthentication>enabled</IISExpressWindowsAuthentication>
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
@@ -189,6 +189,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\ImageUploadValidator.cs" />
+    <Compile Include="Helpers\NotifyHelper.cs" />
     <Compile Include="Helpers\ProjectHelper.cs" />
     <Compile Include="Helpers\TicketHelper.cs" />
     <Compile Include="ICommunicate.cs" />
@@ -208,10 +209,13 @@
     <Compile Include="Models\TicketTypes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\UserProfileViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\AdminLTEshort - Copy.css" />
     <Content Include="Content\AdminLTEshort.css" />
+    <Content Include="Content\bootstrap - Copy.css" />
     <Content Include="Content\BoxTransition.css" />
     <Content Include="Content\BoxTransSemantic.css" />
     <Content Include="Content\RandomImg.css" />
@@ -226,6 +230,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\dataTables.bootstrap.min.css" />
     <Content Include="Content\jquery-jvectormap.css" />
+    <Content Include="Content\skin-black.min.css" />
     <Content Include="Content\skin-blue.min.css" />
     <Content Include="Content\_all-skins.css" />
     <Content Include="favicon.ico" />
@@ -237,6 +242,8 @@
     <Content Include="Content\Site.css" />
     <Content Include="Content\AdminLTE-bootstrap-social.min.css" />
     <Content Include="Content\AdminLTE-without-plugins.css" />
+    <Content Include="gulpfile.js" />
+    <Content Include="Image\17924.jpg" />
     <Content Include="Image\19443_en_1.jpeg" />
     <Content Include="Image\294400.jpg" />
     <Content Include="Image\294406.jpg" />
@@ -251,7 +258,6 @@
     <Content Include="Image\photo-1480497490787-505ec076689f.jpeg" />
     <Content Include="Image\slr9lgqjejz21.jpg" />
     <Content Include="Image\spacer.gif" />
-    <Content Include="npmPlaceholder.txt" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="fonts\fontawesome-webfont.woff" />
@@ -259,8 +265,8 @@
     <Content Include="fonts\fontawesome-webfont.woff2" />
     <Content Include="fonts\ionicons.woff" />
     <Content Include="fonts\ionicons.ttf" />
-    <None Include=".bin\node.cmd" />
     <Content Include="Scripts\Gulp\gulp.js.targets" />
+    <Content Include="private.config" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\FireJs\adminlte.min.js" />
     <Content Include="Scripts\FireJs\bootstrap-datepicker.min.js" />
@@ -391,6 +397,9 @@
     <Content Include="Views\Shared\_LoginPart.cshtml" />
     <Content Include="Views\Shared\_PartialRegister.cshtml" />
     <Content Include="Views\Tickets\MyIndex.cshtml" />
+    <Content Include="Views\Account\ResendEmailConfirmation.cshtml" />
+    <Content Include="Views\Account\ConfirmationSent.cshtml" />
+    <Content Include="Views\Tickets\Dashboard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -439,9 +448,7 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
-    <Error Condition="!Exists('..\packages\Npm.js.1.3.15.7\build\npm.js.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Npm.js.1.3.15.7\build\npm.js.targets'))" />
   </Target>
-  <Import Project="..\packages\Npm.js.1.3.15.7\build\npm.js.targets" Condition="Exists('..\packages\Npm.js.1.3.15.7\build\npm.js.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

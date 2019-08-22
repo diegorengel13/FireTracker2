@@ -8,10 +8,9 @@ using System.Web;
 
 namespace FireTracker2.ViewModels
 {
-    public class UserProfileViewModel
+    public class UserProfileViewModel 
     {
         public string Id { get; set; }
-
         public string FirstName { get; set; }
         public string LastName { get; set; }
         [NotMapped]
