@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using FireTracker.Models;
 using FireTracker2.Helpers;
 using FireTracker2.Models;
+using static FireTracker2.Controllers.AccountController;
 
 namespace FireTracker2.Controllers
 {
@@ -54,6 +55,7 @@ namespace FireTracker2.Controllers
         }
 
         // GET: Projects/Create
+        [NoAuthorize(Roles = "Admin, ProjectManager")]
         public ActionResult Create()
         {
             return View();
@@ -75,7 +77,7 @@ namespace FireTracker2.Controllers
 
             return View("Index");
         }
-
+        [NoAuthorize(Roles = "Admin, ProjectManager")]
         // GET: Projects/Edit/5
         public ActionResult Edit(int? id)
         {

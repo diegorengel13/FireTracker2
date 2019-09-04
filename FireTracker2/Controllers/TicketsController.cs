@@ -10,6 +10,7 @@ using FireTracker.Models;
 using FireTracker2.Helpers;
 using FireTracker2.Models;
 using Microsoft.AspNet.Identity;
+using static FireTracker2.Controllers.AccountController;
 
 namespace FireTracker2.Controllers
 {
@@ -22,13 +23,13 @@ namespace FireTracker2.Controllers
 
         public ActionResult Dashboard()
         {
-            var tickets = db.Tickets.ToList();
-            return View(tickets);
+           
+            return View();
         }
         // GET: Tickets
         public ActionResult Index()
         {
-            var tickets = db.Tickets.ToList();
+            var tickets = db.Tickets.Include("TicketTypes").ToList();
             return View(tickets);
         }
         public ActionResult MyIndex()
@@ -67,7 +68,7 @@ namespace FireTracker2.Controllers
             }
             return View(ticket);
         }
-        [Authorize(Roles = "Submitter, Admin")]
+        [NoAuthorize(Roles = "Admin, Submitter")]
         // GET: Tickets/Create
         public ActionResult Create()
         {
@@ -130,15 +131,19 @@ namespace FireTracker2.Controllers
         // POST: Tickets/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [NoAuthorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Created,Title,Description,ProjectId,TicketTypeId,TicketPriorityId,TicketStatusId,AssignedToUserId")] Ticket ticket)
+        public ActionResult Edit([Bind(Include = "Id,Title,Description,ProjectId,TicketTypeId,TicketPriorityId,TicketStatusId,AssignedToUserId,OwnerUserId")] Ticket ticket)
         {
+           
             if (ModelState.IsValid)
             {
-                ticket.Updated = DateTime.Now;
+                var switchid = TicketHelper.IdSwitch("TicketTypeId","Id");
+                var oldTicket = db.Tickets.AsNoTracking().FirstOrDefault(t => t.Id == ticket.Id);
                 db.Entry(ticket).State = EntityState.Modified;
                 db.SaveChanges();
+                NotifyHelper.ManageNotification(oldTicket, ticket);
                 return RedirectToAction("Index");
             }
             ViewBag.AssignedToUserId = new SelectList(db.Users, "Id", "FullName", ticket.AssignedToUserId);

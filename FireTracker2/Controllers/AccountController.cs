@@ -11,6 +11,7 @@ using Microsoft.Owin.Security;
 using FireTracker2.Models;
 using Frogger_Blogger.Controllers;
 using System.IO;
+using System.Web.Configuration;
 
 namespace FireTracker2.Controllers
 {
@@ -22,7 +23,21 @@ namespace FireTracker2.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        public class NoAuthorize : AuthorizeAttribute
+        {
+            public override void OnAuthorization(AuthorizationContext filterContext)
+            {
+                if (this.AuthorizeCore(filterContext.HttpContext))
+                {
+                    base.OnAuthorization(filterContext);
+                }
+                else
+                {
+                    filterContext.Result = new RedirectResult("~/Home/Unauthorized");
 
+                }
+            }
+        }
         public AccountController()
         {
         }
@@ -56,7 +71,12 @@ namespace FireTracker2.Controllers
                 _userManager = value;
             }
         }
-     
+        [HttpPost]
+        public ActionResult Redirect()
+        {
+            return RedirectToAction("Login","Account");
+        }
+
 
         //
         // GET: /Account/Login
@@ -89,12 +109,16 @@ namespace FireTracker2.Controllers
                 }
                 return RedirectToAction("Login", "Account");
             }
-
+            if (User.IsInRole("None"))
+            {
+                return RedirectToAction("Login");
+            }
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
             {
+              
                 case SignInStatus.Success:
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
@@ -160,11 +184,10 @@ namespace FireTracker2.Controllers
         //
         // GET: /Account/Register
         [AllowAnonymous]
-        public ActionResult Register()
+        public ActionResult GetRegister()
         {
-            return View();
+            return PartialView("_PartialRegister");
         }
-
         //
         // POST: /Account/Register
         [HttpPost]
@@ -176,6 +199,8 @@ namespace FireTracker2.Controllers
             {
 
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName };
+               
+
                 if (ImageUploadValidator.IsWebFriendlyImage(model.AvatarUrl))
                 {
                     var filename = Path.GetFileName(model.AvatarUrl.FileName);
@@ -188,21 +213,27 @@ namespace FireTracker2.Controllers
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-
+                    
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
+                    
                     string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
+                   
+                  
+                    UserManager.AddToRole(user.Id, "None");
+                    TempData["Confirm"] = "Confirm";
                     return RedirectToAction("Login", "Account");
                 }
-                AddErrors(result);
-                return RedirectToAction("Log In");
+                TempData["ErrorMsg"] = "Error";
+                return RedirectToAction("Login");
             }
 
             // If we got this far, something failed, redisplay form
-            return View(model);
+            TempData["ErrorMsg"] = "Error";
+            return RedirectToAction("Login");
+
         }
         [HttpGet]
         [AllowAnonymous]
@@ -226,7 +257,7 @@ namespace FireTracker2.Controllers
         }
         public ActionResult ConfirmationSent()
         {
-            return View();
+            return PartialView("_ConfirmationSent");
         }
         //
         // GET: /Account/ConfirmEmail
@@ -259,7 +290,7 @@ namespace FireTracker2.Controllers
             if (ModelState.IsValid)
             {
                 var user = await UserManager.FindByNameAsync(model.Email);
-                if (user == null)
+                if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
                 {
                     // Don't reveal that the user does not exist or is not confirmed
                     return View("ForgotPasswordConfirmation");
@@ -457,6 +488,26 @@ namespace FireTracker2.Controllers
         public ActionResult ExternalLoginFailure()
         {
             return View();
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> DemoAsync(string demoEmail)
+        {
+            var email = WebConfigurationManager.AppSettings[demoEmail];
+            var pass = WebConfigurationManager.AppSettings["DemoUserPass"];
+            var result = await SignInManager.PasswordSignInAsync(email, pass, false, shouldLockout: false);
+            switch (result)
+            {
+                case SignInStatus.Success:
+                    return RedirectToAction("Dashboard","Home");
+                case SignInStatus.Failure:
+                default:
+                    return RedirectToActionPermanent("Login");
+                    
+            }
+
         }
 
         protected override void Dispose(bool disposing)

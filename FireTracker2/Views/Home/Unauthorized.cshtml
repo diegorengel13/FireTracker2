@@ -1,0 +1,43 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<style>
+    .noauth {
+        background-repeat: no-repeat !important;
+        background-position: center !important;
+        background-size: cover !important;
+        height: 100% !important;
+    }
+</style>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Unauthorized</title>
+</head>
+<body>
+    <div>
+        <img width="1500" height="800" src="~/Image/IgnorantAliveEagle-size_restricted.gif" />
+
+        <audio id="noaccess" src="/Sounds/AH%20Ah%20Ah!%20you%20didnt%20say%20the%20magic%20word.mp3" type="audio/mpeg" controls autoplay hidden="true">
+                <source src="/Sounds/AH%20Ah%20Ah!%20you%20didnt%20say%20the%20magic%20word.mp3" type="audio/mpeg" />
+        </audio>
+     
+        <p id="demo"></p>
+    </div>
+</body>
+</html>
+@section scripts{
+    <script>
+     
+             if ('@TempData["AccessDenied"]' == "AccessDenied")
+                 {
+                 $(window).load(function () {
+                     $('#noaccess').click('play');
+            });
+        };
+    </script>
+
+}

@@ -1,37 +1,31 @@
 ﻿@model FireTracker.Models.Ticket
 
-@{
-    ViewBag.Title = "Details";
-}
-
-<h2>Details</h2>
-
 <div>
     <h4>Ticket</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.AssignedToUser.FirstName)
+            @Html.DisplayNameFor(model => model.AssignedToUser.AvatarUrl)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.AssignedToUser.FirstName)
+            @Html.DisplayFor(model => model.AssignedToUser.AvatarUrl)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.OwnerUser.FirstName)
+            @Html.DisplayNameFor(model => model.OwnerUser.AvatarUrl)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.OwnerUser.FirstName)
+            @Html.DisplayFor(model => model.OwnerUser.AvatarUrl)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Project.Name)
+            @Html.DisplayNameFor(model => model.Project.AvatarUrl)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Project.Name)
+            @Html.DisplayFor(model => model.Project.AvatarUrl)
         </dd>
 
         <dt>

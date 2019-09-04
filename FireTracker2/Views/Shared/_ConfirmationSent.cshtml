@@ -1,0 +1,31 @@
+﻿@model FireTracker2.Models.ForgotPasswordViewModel
+@{
+    ViewBag.Title = "ConfirmationSent";
+    Layout = "~/Views/Shared/_RegLog.cshtml";
+}
+
+    <link href="~/Content/Modal.css" rel="stylesheet" />
+
+<div class="page-wrapper">
+    <a class="btn trigger" href="javascript:;">Click Me!</a>
+</div>
+<div class="modal-wrapper">
+    <div class="modal">
+        <div class="head">
+            <a class="btn-close trigger" href="javascript:;"></a>
+        </div>
+        <div class="content">
+        </div>
+    </div>
+</div>
+
+@section scripts{
+<script>
+      if ('@TempData["Confirm"]' == "Confirm") {
+            window.onload = function () {
+                documment.getElementById('.trigger').click();
+            }
+        };
+   
+</script>
+    }

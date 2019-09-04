@@ -51,22 +51,25 @@ namespace FireTracker2.Helpers
                 db.SaveChanges();
             }
         }
-        public List<string> UsersInRoleOnProject(int projectId, string roles)
-        {
-            var people = new List<string>();
-            foreach(var user in UsersOnProject(projectId).ToList())
-            {
-                if(roleHelp.IsUserInRole(user.Id, roles))
-                {
-                    people.Add(user.Id);
-                }
-            }
-            return people;
-        }
         public ICollection<ApplicationUser> UsersOnProject(int projectId)
         {
             return db.Projects.Find(projectId).Users;
         }
+        public ICollection<string> UsersInRoleOnProject(int projectId, string roles)
+        {
+            var users = UsersOnProject(projectId);
+            var people = new List<string>();
+            foreach(var user in users)
+            {
+                if(roleHelp.IsUserInRole(user.Id, roles))
+                {
+                    people.Add(user.FullName);
+
+                }
+            }
+            return people;
+        }
+       
         public ICollection<ApplicationUser> UsersNotOnProject(int projectId)
         {
             return db.Users.Where(u => u.Projects.All(p => p.Id != projectId)).ToList();

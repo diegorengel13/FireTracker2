@@ -15,6 +15,7 @@ namespace FireTracker.Models
         public string RecepientId { get; set; }
         public string SenderId { get; set; }
         public string NotificationBody { get; set; }
+        public string Subject { get; set; }
 
         public DateTime Created { get; set; }
         public bool Read { get; set; }

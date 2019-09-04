@@ -20,7 +20,7 @@ namespace FireTracker2.Models
         {
             get
             {
-                return $"{LastName},{FirstName}";
+                return $"{LastName}, {FirstName}";
             }
         }
        
@@ -61,22 +61,13 @@ namespace FireTracker2.Models
         }
        
         public System.Data.Entity.DbSet<FireTracker.Models.TicketAttachment> TicketAttachments { get; set; }
-
         public System.Data.Entity.DbSet<FireTracker.Models.Ticket> Tickets { get; set; }
-
-
         public System.Data.Entity.DbSet<FireTracker2.Models.Project> Projects { get; set; }
-
         public System.Data.Entity.DbSet<FireTracker.Models.TicketPriority> TicketPriorities { get; set; }
-
         public System.Data.Entity.DbSet<FireTracker.Models.TicketStatus> TicketStatus { get; set; }
-
         public System.Data.Entity.DbSet<FireTracker.Models.TicketComment> TicketComments { get; set; }
-
         public System.Data.Entity.DbSet<FireTracker.Models.TicketHistory> TicketHistories { get; set; }
-
         public System.Data.Entity.DbSet<FireTracker.Models.TicketTypes> TicketTypes { get; set; }
-
         public System.Data.Entity.DbSet<FireTracker.Models.TicketNotification> TicketNotifications { get; set; }
     }
 }

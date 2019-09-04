@@ -6,9 +6,11 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using FireTracker2.Helpers;
+using static FireTracker2.Controllers.AccountController;
 
 namespace FireTracker2.Controllers
 {
+    [NoAuthorize(Roles = "Admin")]
     [RequireHttps]
     public class AdminController : Controller
     {
@@ -62,7 +64,7 @@ namespace FireTracker2.Controllers
             return RedirectToAction("UserIndex");
         }
     
-     
+        [Authorize(Roles ="Admin")]
         public ActionResult ManageRoles()
         {
             ViewBag.Users = new MultiSelectList(db.Users.ToList(), "Id", "FullName");
@@ -120,7 +122,7 @@ namespace FireTracker2.Controllers
                     projectHelper.AddUserToProject(userId, projectId);
                 }
             }
-            return RedirectToAction("UserIndex");
+            return RedirectToAction("Index", "Projects");
         }
         [HttpGet]
         public ActionResult ManageProjectUsers (int? id)
@@ -172,9 +174,8 @@ namespace FireTracker2.Controllers
                     projectHelper.AddUserToProject(developerId, projectId);
                 }
             }
-
-
-            return RedirectToAction("Details", "Projects", new { id = projectId });
+            db.SaveChanges();
+            return RedirectToAction("Index", "Projects", new { id = projectId });
             
         }
 

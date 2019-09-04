@@ -21,7 +21,6 @@ namespace FireTracker2
             //       action = "Register",
             //       id = UrlParameter.Optional
             //   });
-
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",

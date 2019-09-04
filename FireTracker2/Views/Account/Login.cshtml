@@ -7,14 +7,16 @@
 
 
 @*@using (Html.BeginForm("login","Account",FromMethod.Post)*@
-
+<style>
+    .modal-backdrop {
+        position: inherit !important;
+    }
+</style>
 <div class="login-logo">
-    <a href="../../index2.html"><b>Admin</b>LTE</a>
+    <a class="titleword"><b>Fire</b>Tracker</a>
 </div>
-
 <div class="ui shape">
     <div class="sides">
-
         <div class='first side active'>
             <div class='login-box'>
                 <!--Login Box-->
@@ -23,14 +25,17 @@
                         <h2 class='ui center aligned icon header'>
                             <i class="login-box-msg">Sign in to start your session</i>
                         </h2>
-
                         <div class='ui form'>
                             @Html.Partial("_LoginPart")
+                            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-info">
+                                More Options
+                            </button>
                         </div>
 
                     </div>
                 </div>
             </div>
+
         </div>
         <div class='second side '>
             <div class='login-box'>
@@ -46,8 +51,75 @@
                 </div>
             </div>
         </div>
+
+        <!--Register complete modal-->
+
+
+
     </div>
 </div>
 <a class="ui right ribbon label" id="flip-label">
     Not a member yet?
 </a>
+<div id="confirmModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Confirm Your Email</h4>
+            </div>
+            <div class="modal-body">
+                <p><h4>Your Registration was Succesful.</h4></p>
+                <p>A confirmation Email has been sent</p>
+                <p>If You do not see the email please click @Html.ActionLink("Resend", "ResendEmailConfirmation")</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal modal-info fade" id="modal-info">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content ">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">More Options</h4>
+            </div>
+            <div class="modal-body">
+                @Html.Partial("_DemoPartial")
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-outline">Save changes</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
+@section scripts{
+    <script src="~/Scripts/FireJs/adminlte.min.js"></script>
+    <script src="~/Scripts/modal.js"></script>
+    <script>
+
+        if ('@TempData["ErrorMsg"]' == "Error")
+        {
+            $("div.first").removeClass("active");
+            $('div.second').addClass("active");
+        }
+        if ('@TempData["Confirm"]' == "Confirm")
+        {
+            $(window).load(function(){
+           $('#confirmModal').modal('show');
+            });
+        };
+
+    </script>
+
+}

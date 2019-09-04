@@ -61,9 +61,18 @@ namespace FireTracker2.Helpers
                 default:
                     return false;
             }
-           
+         
         }
-
+        public static string IdSwitch(string id, string value)
+        {
+            switch (id)
+            {
+                case "TicketTypeId":
+                    return db.TicketTypes.Find(Convert.ToInt32(value)).Name;
+                default:
+                    return value;
+            }
+        }
 
     }
 }

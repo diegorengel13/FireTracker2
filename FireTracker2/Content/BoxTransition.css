@@ -31,8 +31,7 @@ body {
 #flip-label {
     position: absolute;
     left: calc(50% + 198px);
-    top: 9rem
-    ;
+    top: 9rem;
     visibility: hidden;
 }
 <!---->

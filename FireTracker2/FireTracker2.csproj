@@ -195,6 +195,7 @@
     <Compile Include="ICommunicate.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Email.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Project.cs" />
@@ -218,6 +219,8 @@
     <Content Include="Content\bootstrap - Copy.css" />
     <Content Include="Content\BoxTransition.css" />
     <Content Include="Content\BoxTransSemantic.css" />
+    <Content Include="Content\dataTables.bootstrap.css" />
+    <Content Include="Content\Modal.css" />
     <Content Include="Content\RandomImg.css" />
     <Content Include="Content\AdminLTE-bootstrap-social.css" />
     <Content Include="Content\AdminLTE-fullcalendar.css" />
@@ -249,15 +252,27 @@
     <Content Include="Image\294406.jpg" />
     <Content Include="Image\3d23a63c5bea3a9dccbdf74ec8f23edb.jpeg" />
     <Content Include="Image\42467.jpg" />
+    <Content Include="Image\Blue-Carb.jpg" />
+    <Content Include="Image\blue-carbon.jpg" />
+    <Content Include="Image\carbon-fiber-wallpaper-hd-1.jpg" />
+    <Content Include="Image\IgnorantAliveEagle-size_restricted.gif" />
+    <Content Include="Image\Red-Carb.jpg" />
+    <Content Include="Image\Yellow-Carb.jpg" />
+    <Content Include="Scripts\jquery.dataTables.js" />
+    <Content Include="Sounds\AH Ah Ah! you didnt say the magic word.mp3" />
+    <Content Include="Uploads\Alex.png" />
+    <Content Include="Uploads\Alfred.png" />
+    <Content Include="Uploads\Anita.png" />
     <Content Include="Image\blue.png" />
+    <Content Include="Uploads\Claire.png" />
     <Content Include="Image\customizer-image-background.jpg" />
     <Content Include="Image\dark-desktop-background-img.jpg" />
+    <Content Include="Image\FIREtracker.png" />
     <Content Include="Image\hd_Bakcgorund.jpg" />
     <Content Include="Image\images %281%29.jpeg" />
     <Content Include="Image\images.jpeg" />
     <Content Include="Image\photo-1480497490787-505ec076689f.jpeg" />
     <Content Include="Image\slr9lgqjejz21.jpg" />
-    <Content Include="Image\spacer.gif" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="fonts\fontawesome-webfont.woff" />
@@ -267,6 +282,7 @@
     <Content Include="fonts\ionicons.ttf" />
     <Content Include="Scripts\Gulp\gulp.js.targets" />
     <Content Include="private.config" />
+    <None Include="Properties\PublishProfiles\FireTracker2 - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\FireJs\adminlte.min.js" />
     <Content Include="Scripts\FireJs\bootstrap-datepicker.min.js" />
@@ -304,6 +320,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\modal.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -326,7 +343,6 @@
     <Content Include="Views\Account\ForgotPassword.cshtml" />
     <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\ResetPassword.cshtml" />
     <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
     <Content Include="Views\Account\SendCode.cshtml" />
@@ -346,7 +362,6 @@
     <Content Include="Views\TicketAttachments\Index.cshtml" />
     <Content Include="Views\Tickets\Create.cshtml" />
     <Content Include="Views\Tickets\Delete.cshtml" />
-    <Content Include="Views\Tickets\Details.cshtml" />
     <Content Include="Views\Tickets\Edit.cshtml" />
     <Content Include="Views\Tickets\Index.cshtml" />
     <Content Include="Views\Projects\Create.cshtml" />
@@ -398,13 +413,16 @@
     <Content Include="Views\Shared\_PartialRegister.cshtml" />
     <Content Include="Views\Tickets\MyIndex.cshtml" />
     <Content Include="Views\Account\ResendEmailConfirmation.cshtml" />
-    <Content Include="Views\Account\ConfirmationSent.cshtml" />
+    <Content Include="Views\Shared\_ConfirmationSent.cshtml" />
+    <Content Include="Views\Tickets\View.cshtml" />
     <Content Include="Views\Tickets\Dashboard.cshtml" />
+    <Content Include="Views\Account\_DemoPartial.cshtml" />
+    <Content Include="Views\Home\Unauthorized.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Attachments\" />
     <Folder Include="Projects\" />
-    <Folder Include="Uploads\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

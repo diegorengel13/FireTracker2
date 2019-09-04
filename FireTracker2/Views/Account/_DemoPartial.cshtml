@@ -1,0 +1,107 @@
+﻿@using FireTracker2.Models
+
+
+<style>
+    .actionbtn{
+        max-height: 100px;
+        max-width:200px;
+        background-color:yellow;
+    }
+</style>
+<div class="form-control">
+    <div class="box box-solid bg-light-blue-gradient collapsed-box">
+        <div class="box-header ui-sortable-handle" style="cursor: move;">
+            <!-- tools box -->
+            <div class="pull-right box-tools">
+                <button type="button" class="btn btn-primary btn-sm daterange pull-right" data-toggle="tooltip" title="" data-original-title="Date range">
+                    <i class="fa fa-calendar"></i>
+                </button>
+                <button type="button" class="btn btn-primary btn-sm pull-right" data-widget="collapse" data-toggle="tooltip" title="" style="margin-right: 5px;" data-original-title="Collapse">
+                    <i class="fa fa-plus"></i>
+                </button>
+            </div>
+            <!-- /. tools -->
+            <i class="fa fa-map-marker"></i>
+            <h3 class="box-title">
+                Demo Users
+            </h3>
+        </div>
+        <!-- /.box-body-->
+        <div class="box-body" style="">
+            <div class="row">
+                @using (Html.BeginForm("DemoAsync", "Account", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.Hidden("DemoEmail", "DemoAdmin")
+                    <div class="col-md-3">
+                        <div class="box box-primary">
+                            <div class="box-body box-profile">
+                                <img class="profile-user-img img-responsive img-circle" src="~/Uploads/Anita.png" />
+                                <h3 class="profile-username text-center">Anita Smith</h3>
+                                <p class="text-muted text-center">Demo Admin</p>
+                                <button type="submit" class="btn btn-primary btn-block">Login</button>
+                            </div>
+                            <!-- /.box-body -->
+                        </div>
+                    </div>
+                }
+                @using (Html.BeginForm("DemoAsync", "Account", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.Hidden("DemoEmail", "DemoProjectManager")
+                    <div class="col-md-3">
+                        <div class="box box-primary">
+                            <div class="box-body box-profile">
+                                <img class="profile-user-img img-responsive img-circle" src="~/Uploads/Alex.png" alt="User profile picture">
+                                <h3 class="profile-username text-center">Alex</h3>
+                                <p class="text-muted text-center">Demo Project Manager</p>
+                                <button type="submit" class="btn btn-primary btn-block">Login</button>
+                            </div>
+                            <!-- /.box-body -->
+                        </div>
+                    </div>
+                }
+                @using (Html.BeginForm("DemoAsync", "Account", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.Hidden("DemoEmail", "DemoDeveloper")
+                    <div class="col-md-3">
+                        <div class="box box-primary">
+                            <div class="box-body box-profile">
+                                <img class="profile-user-img img-responsive img-circle" src="~/Uploads/Alfred.png" />
+                                <h3 class="profile-username text-center">Alfred Wiznowski</h3>
+                                <p class="text-muted text-center">Demo Developer</p>
+                                <button type="submit" class="btn btn-primary btn-block">Login</button>
+                            </div>
+                            <!-- /.box-body -->
+                        </div>
+                    </div>
+                }
+                @using (Html.BeginForm("DemoAsync", "Account", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.Hidden("DemoEmail", "DemoSubmitter")
+                    <div class="col-md-3">
+                        <div class="box box-primary">
+                            <div class="box-body box-profile">
+                                <img class="profile-user-img img-responsive img-circle" src="~/Uploads/Claire.png" alt="User profile picture">
+                                <h3 class="profile-username text-center">Claire O'Malley</h3>
+                                <p class="text-muted text-center">Demo Submitter</p>
+                                <button type="submit" class="btn btn-primary btn-block">Login</button>
+                            </div>
+                            <!-- /.box-body -->
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    @Html.ActionLink("Resend Email Confirmation?", "ResendEmailConfirmation", null, new { @class = "actionbtn" })
+    @Html.ActionLink("Forgot Password?", "ForgotPassword", null, new { @class = "actionbtn" })
+   
+</div>
+
+@section scripts{
+    <script src="~/Scripts/FireJs/adminlte.min.js"></script>
+
+}
