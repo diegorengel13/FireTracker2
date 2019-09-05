@@ -149,7 +149,6 @@ namespace FireTracker2.Controllers
             {
                 projectHelper.RemoveUserFromProject(user.Id, projectId);
             }
-
             //if the incoming list is not null we will reassign them to all that are selected
             if (ProjectManager != null)
             {
@@ -174,7 +173,7 @@ namespace FireTracker2.Controllers
                     projectHelper.AddUserToProject(developerId, projectId);
                 }
             }
-            db.SaveChanges();
+          
             return RedirectToAction("Index", "Projects", new { id = projectId });
             
         }

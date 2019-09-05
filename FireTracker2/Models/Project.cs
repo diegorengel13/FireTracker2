@@ -11,18 +11,13 @@ namespace FireTracker2.Models
     public class Project
     {
         public int Id { get; set; }
-        public int TicketId { get; set; }
-        public string AvatarUrl { get; set; }
-        
-        [Display(Name = "Email")]
-        public string Email { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public ICollection<Ticket> Tickets { get; set; }
-        public ICollection<ApplicationUser> Users { get; set; }
-
+        public virtual ICollection<Ticket> Tickets { get; set; }
+        public virtual ICollection<ApplicationUser> Users { get; set; }
         public Project()
         {
+            Tickets = new HashSet<Ticket>();
             Users = new HashSet<ApplicationUser>();
         }
 

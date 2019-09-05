@@ -28,7 +28,7 @@ namespace FireTracker2.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TicketTypes ticketTypes = db.TicketTypes.Find(id);
+            TicketType ticketTypes = db.TicketTypes.Find(id);
             if (ticketTypes == null)
             {
                 return HttpNotFound();
@@ -47,7 +47,7 @@ namespace FireTracker2.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name")] TicketTypes ticketTypes)
+        public ActionResult Create([Bind(Include = "Id,Name")] TicketType ticketTypes)
         {
             if (ModelState.IsValid)
             {
@@ -66,7 +66,7 @@ namespace FireTracker2.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TicketTypes ticketTypes = db.TicketTypes.Find(id);
+            TicketType ticketTypes = db.TicketTypes.Find(id);
             if (ticketTypes == null)
             {
                 return HttpNotFound();
@@ -79,7 +79,7 @@ namespace FireTracker2.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name")] TicketTypes ticketTypes)
+        public ActionResult Edit([Bind(Include = "Id,Name")] TicketType ticketTypes)
         {
             if (ModelState.IsValid)
             {
@@ -97,7 +97,7 @@ namespace FireTracker2.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TicketTypes ticketTypes = db.TicketTypes.Find(id);
+            TicketType ticketTypes = db.TicketTypes.Find(id);
             if (ticketTypes == null)
             {
                 return HttpNotFound();
@@ -110,7 +110,7 @@ namespace FireTracker2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            TicketTypes ticketTypes = db.TicketTypes.Find(id);
+            TicketType ticketTypes = db.TicketTypes.Find(id);
             db.TicketTypes.Remove(ticketTypes);
             db.SaveChanges();
             return RedirectToAction("Index");

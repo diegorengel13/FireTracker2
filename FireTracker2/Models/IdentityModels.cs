@@ -25,6 +25,7 @@ namespace FireTracker2.Models
         }
        
         public string DisplayName { get; set; }
+
         public virtual ICollection<Project> Projects { get; set; }
         public virtual ICollection<TicketComment> TicketComments { get; set; }
         public virtual ICollection<TicketHistory> TicketHistories { get; set; }
@@ -67,7 +68,7 @@ namespace FireTracker2.Models
         public System.Data.Entity.DbSet<FireTracker.Models.TicketStatus> TicketStatus { get; set; }
         public System.Data.Entity.DbSet<FireTracker.Models.TicketComment> TicketComments { get; set; }
         public System.Data.Entity.DbSet<FireTracker.Models.TicketHistory> TicketHistories { get; set; }
-        public System.Data.Entity.DbSet<FireTracker.Models.TicketTypes> TicketTypes { get; set; }
+        public System.Data.Entity.DbSet<FireTracker.Models.TicketType> TicketTypes { get; set; }
         public System.Data.Entity.DbSet<FireTracker.Models.TicketNotification> TicketNotifications { get; set; }
     }
 }

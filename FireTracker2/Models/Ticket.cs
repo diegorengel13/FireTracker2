@@ -33,7 +33,7 @@ namespace FireTracker.Models
         /// virtual nav
         /// </summary>
         public virtual Project Project { get; set; }
-        public virtual TicketTypes TicketTypes { get; set; }
+        public virtual TicketType TicketType { get; set; }
         public virtual TicketStatus TicketStatus { get; set; }
         public virtual TicketPriority TicketPriority { get; set; }
         public virtual ApplicationUser OwnerUser { get; set; }

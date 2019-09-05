@@ -29,7 +29,7 @@ namespace FireTracker2.Controllers
         // GET: Tickets
         public ActionResult Index()
         {
-            var tickets = db.Tickets.Include("TicketTypes").ToList();
+            var tickets = db.Tickets.Include("TicketType").ToList();
             return View(tickets);
         }
         public ActionResult MyIndex()
@@ -99,7 +99,7 @@ namespace FireTracker2.Controllers
             }
             return View("Index");
         }
-        [Authorize(Roles = "Admin, ProjectManager, Developer")]
+        [NoAuthorize(Roles = "Admin, ProjectManager, Developer")]
         // GET: Tickets/Edit/5
         public ActionResult Edit(int? id)
         {

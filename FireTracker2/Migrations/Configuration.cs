@@ -45,7 +45,7 @@ namespace FireTracker2.Migrations
             {
                 roleManager.Create(new IdentityRole { Name = "None" });
             }
-         
+          
 
             //Instance of UserManager
             var userManager = new UserManager<ApplicationUser>(
@@ -191,16 +191,20 @@ namespace FireTracker2.Migrations
                 new FireTracker.Models.TicketStatus { Name = "Submitted/Assigned" }
                 );
             context.TicketTypes.AddOrUpdate(t => t.Name,
-                new FireTracker.Models.TicketTypes
+                new FireTracker.Models.TicketType
                 {
                     Name = "Bug",
                     Description = "An Error has occured in the project which has resulted in the application crashing or user is seeing an error message"
                 },
-                new FireTracker.Models.TicketTypes { Name = "Defect", Description = "information not being displayed correctly or functions are miscalculating" },
-                new FireTracker.Models.TicketTypes { Name = "Function Request", Description = "A request for a new function or feature has been requested" },
-                new FireTracker.Models.TicketTypes { Name = "Complaint", Description = "A general complaint has been made on the application" },
-                new FireTracker.Models.TicketTypes { Name = "Documentation Request", Description = "Request of documents on the application has been made" }
+                new FireTracker.Models.TicketType { Name = "Defect", Description = "information not being displayed correctly or functions are miscalculating" },
+                new FireTracker.Models.TicketType { Name = "Function Request", Description = "A request for a new function or feature has been requested" },
+                new FireTracker.Models.TicketType { Name = "Complaint", Description = "A general complaint has been made on the application" },
+                new FireTracker.Models.TicketType { Name = "Documentation Request", Description = "Request of documents on the application has been made" }
                 );
+            context.Projects.AddOrUpdate(t => t.Name,
+                new Project { Name = "Frogger_Blogger", Description = "Blog Project" },
+                new Project { Name = "Portfolio", Description = "Personal Portfolio" },
+                new Project { Name = "Bug Tracker", Description = "Bug Tracker Project" });
             context.SaveChanges();
 
         }
