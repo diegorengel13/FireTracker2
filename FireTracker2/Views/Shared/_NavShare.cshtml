@@ -18,34 +18,33 @@
             background-repeat: no-repeat !important;
             background-position: center !important;
             background-size: cover !important;
-          
             height: 100% !important;
         }
+
         .dashbackred {
             background-image: url('../../Image/Red-Carb.jpg') !important;
             background-repeat: no-repeat !important;
             background-position: center !important;
             background-size: cover !important;
-       
             height: 100% !important;
         }
+
         .dashbackylw {
             background-image: url('../../Image/Yellow-Carb.jpg') !important;
             background-repeat: no-repeat !important;
             background-position: center !important;
             background-size: cover !important;
- 
             height: 100% !important;
         }
+
         .dashbackblu {
             background-image: url('../../Image/Blue-Carb.jpg') !important;
             background-repeat: no-repeat !important;
             background-position: center !important;
             background-size: cover !important;
-    
             height: 100% !important;
         }
-         
+
         .main-header .logo {
             padding: 0 !important;
         }
@@ -56,7 +55,7 @@
                 margin: unset !important;
             }
 
-        
+
 
         .logoimg {
             background-image: url('../../Image/FIREtracker.png');
@@ -67,6 +66,7 @@
             background-repeat: no-repeat;
             background-size: 250px;
         }
+
         .backimg {
             background-image: url('../../Image/17924.jpg');
             width: auto;
@@ -115,11 +115,10 @@
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
     <!-- Font Awesome -->
     <link href="~/fonts/font-awesome.min.css" rel="stylesheet" />
-
+    <link href="~/Content/AdminLTEshort.css" rel="stylesheet" />
     <!-- Ionicons -->
     <link href="~/fonts/ionicons.min.css" rel="stylesheet" />
     <!-- Theme style -->
-    <link href="~/Content/AdminLTE.min.css" rel="stylesheet" />
     <!-- iCheck -->
     <link href="~/Content/blue.css" rel="stylesheet" />
     <link href="~/Content/AdminLTE-fullcalendar.css" rel="stylesheet" />
@@ -140,9 +139,10 @@
          folder instead of downloading all of them to reduce the load. -->
 
     <link href="~/Content/_all-skins.css" rel="stylesheet" />
+
 </head>
 
-<body>
+<body translate="no">
     @if (Request.IsAuthenticated)
     {
         if (User.IsInRole("Developer"))
@@ -388,7 +388,7 @@
                                         </span>
                                     </a>
                                     <ul class="treeview-menu">
-                                        <li><a href="index.html"><i class="fa fa-circle-o"></i> Dashboard v1</a></li>
+                                        <li><a href="@Url.Action("Dashboard","Home")"><i class="fa fa-circle-o"></i> Dashboard</a></li>
                                     </ul>
                                 </li>
                                 <li class="treeview">
@@ -440,7 +440,7 @@
                     </div>
                     <!-- /.control-sidebar -->
                     <!-- Add the sidebar's background. This div must be placed
-    immediately after the control sidebar -->
+                    immediately after the control sidebar -->
                     <div class="control-sidebar-bg"></div>
                 </div>
             </div>
@@ -457,7 +457,7 @@
                             <!-- mini logo for sidebar mini 50x50 pixels -->
                             <span class="logo-mini"><b>A</b>LT</span>
                             <!-- logo for regular state and mobile devices -->
-                            <div class="logoimg" style="width:250px; height:50px">
+                            <div style="width:250px; height:50px">
                                 <b>Fire</b>Tracker
                             </div>
                         </a>
@@ -483,26 +483,26 @@
                                                 <!-- inner menu: contains the actual data -->
                                                 <ul class="menu">
                                                     @foreach (var notification in NotifyHelper.GetUnreadUserNotifications())
+                                                    {
+                                                        using (Html.BeginForm("MarkRead", "TicketNotifications"))
                                                         {
-                                                            using (Html.BeginForm("MarkRead", "TicketNotifications"))
-                                                            {
-                                                                @Html.AntiForgeryToken()
-                                                                @Html.Hidden("Id", notification.Id)
-                                                                <li>
-                                                    <!-- start message -->
-                                                    <a href="#">
-                                                                <div class="pull-left">
-                                                                    <img src="@notification.Sender.AvatarUrl" class="img-circle" alt="@notification.Sender.Email">
-                                                                </div>
-                                                                <h4>
-                                                                    @notification.Sender.FullName
-                                                                    <small><i class="fa fa-clock-o"></i> @notification.Created.ToString("MM/dd/yyyy")</small>
-                                                                </h4>
-                                                                <p>@notification.Subject</p>
-                                                            </a>
-                                                        </li>
-                                                    <!-- end message -->
-                                                    }
+                                                            @Html.AntiForgeryToken()
+                                                            @Html.Hidden("Id", notification.Id)
+                                                            <li>
+                                                                <!-- start message -->
+                                                                <a href="#">
+                                                                    <div class="pull-left">
+                                                                        <img src="@notification.Sender.AvatarUrl" class="img-circle" alt="@notification.Sender.Email">
+                                                                    </div>
+                                                                    <h4>
+                                                                        @notification.Sender.FullName
+                                                                        <small><i class="fa fa-clock-o"></i> @notification.Created.ToString("MM/dd/yyyy")</small>
+                                                                    </h4>
+                                                                    <p>@notification.Subject</p>
+                                                                </a>
+                                                            </li>
+                                                            <!-- end message -->
+                                                        }
                                                     }
                                                 </ul>
                                             </li>
@@ -690,7 +690,7 @@
                                         </span>
                                     </a>
                                     <ul class="treeview-menu">
-                                        <li><a href="index.html"><i class="fa fa-circle-o"></i> Dashboard v1</a></li>
+                                        <li><a href="@Url.Action("Dashboard","Home")"><i class="fa fa-circle-o"></i> Dashboard</a></li>
                                     </ul>
                                 </li>
                                 <li class="treeview">
@@ -729,8 +729,8 @@
                                     </a>
                                     <ul class="treeview-menu">
                                         <li><a href="@Url.Action("Index", "Tickets")"><i class="fa fa-circle-o"></i> Index</a></li>
-                                        <li><a href="pages/charts/morris.html"><i class="fa fa-circle-o"></i> Dashboard</a></li>
-                  
+                                        <li><a href="@Url.Action("Dashboard", "Tickets")"><i class="fa fa-circle-o"></i> Dashboard</a></li>
+
                                     </ul>
                                 </li>
                             </ul>
@@ -738,13 +738,15 @@
                         <!-- /.sidebar -->
                     </aside>
                     <div class="content-wrapper dashbackred">
-                            @RenderBody()
+                        @RenderBody()
                     </div>
-                            <!-- /.control-sidebar -->
-                            <!-- Add the sidebar's background. This div must be placed
-    immediately after the control sidebar -->
-                            <div class="control-sidebar-bg"></div>
-                        </div>
+                    <!-- /.control-sidebar -->
+                    <!-- Add the sidebar's background. This div must be placed
+                    immediately after the control sidebar -->
+                    <div class="control-sidebar-bg">
+                        <img src="~/Image/3d23a63c5bea3a9dccbdf74ec8f23edb.jpeg" />
+                    </div>
+                </div>
             </div>
         }
         if (User.IsInRole("Submitter"))
@@ -990,7 +992,7 @@
                                         </span>
                                     </a>
                                     <ul class="treeview-menu">
-                                        <li><a href="index.html"><i class="fa fa-circle-o"></i> Dashboard v1</a></li>
+                                        <li><a href="@Url.Action("Dashboard","Home")"><i class="fa fa-circle-o"></i> Dashboard</a></li>
                                     </ul>
                                 </li>
                                 <li class="treeview">
@@ -1016,7 +1018,7 @@
                                     </a>
                                     <ul class="treeview-menu">
                                         <li><a href="@Url.Action("Index", "Tickets")"><i class="fa fa-circle-o"></i> Index</a></li>
-                                        <li><a href="pages/charts/morris.html"><i class="fa fa-circle-o"></i> Dashboard</a></li>
+                                        <li><a href="@Url.Action("Dashboard", "Tickets")"><i class="fa fa-circle-o"></i> Dashboard</a></li>
 
                                     </ul>
                                 </li>
@@ -1029,7 +1031,7 @@
                     </div>
                     <!-- /.control-sidebar -->
                     <!-- Add the sidebar's background. This div must be placed
-    immediately after the control sidebar -->
+                    immediately after the control sidebar -->
                     <div class="control-sidebar-bg"></div>
                 </div>
             </div>
@@ -1329,20 +1331,21 @@
                     </div>
                     <!-- /.control-sidebar -->
                     <!-- Add the sidebar's background. This div must be placed
-    immediately after the control sidebar -->
+                    immediately after the control sidebar -->
                     <div class="control-sidebar-bg"></div>
                 </div>
             </div>
         }
 
-          
-      
 
-        
-                                            <!-- jQuery 3 -->
+
+
+
+        <!-- jQuery 3 -->
         <script src="~/Scripts/FireJs/jquery.min.js"></script>
         <script src="~/Scripts/FireJs/jquery.knob.js"></script>
-        <script src="~/Scripts/FireJs/dashboard2.js"></script>
+        <!-- Bootstrap 3.3.7 -->
+        <script src="~/Scripts/bootstrap.min.js"></script>
         <!-- ChartJS -->
         <script src="~/Scripts/FireJs/Chart.js"></script>
         <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
@@ -1351,8 +1354,7 @@
         <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
         <script>$.widget.bridge('uibutton', $.ui.button);</script>
         <!-- Morris.js charts -->
-        <script src="~/Scripts/FireJs/raphael.min.js"></script>
-        <script src="~/Scripts/FireJs/morris.js"></script>
+
         <!-- Sparkline -->
         <script src="~/Scripts/FireJs/jquery.sparkline.min.js"></script>
         <!-- jvectormap -->
@@ -1381,14 +1383,17 @@
         <script src="~/Scripts/FireJs/adminlte.min.js"></script>
         <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
         <!-- AdminLTE for demo purposes -->
+        <script type="text/javascript" src="https://cdn.fusioncharts.com/fusioncharts/latest/fusioncharts.js"></script>
+        <script type="text/javascript" src="https://cdn.fusioncharts.com/fusioncharts/latest/themes/fusioncharts.theme.fusion.js"></script>
+        <script src="~/Scripts/FireJs/raphael.min.js"></script>
+        <script src="~/Scripts/FireJs/morris.js"></script>
+        <script src="~/Scripts/Chart.js"></script>
 
-        <script src="~/Scripts/FireJs/demo.js"></script>
+        <script src="~/Scripts/file1.js"></script>
 
-        <!-- Bootstrap 3.3.7 -->
-        <script src="~/Scripts/bootstrap.min.js"></script>
         <!-- iCheck -->
         <script src="~/Scripts/icheck.min.js"></script>
-        <script>
+        @*<script>
             $(function () {
                 $('input').iCheck({
                     checkboxClass: 'icheckbox_square-blue',
@@ -1396,8 +1401,12 @@
                     increaseArea: '20%' /* optional */
                 });
             });
-        </script>
+        </script>*@
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
 
+        <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+
+        <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
         @RenderSection("scripts", required: false)
     }
 </body>

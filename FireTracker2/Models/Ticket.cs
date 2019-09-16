@@ -1,16 +1,13 @@
-﻿using FireTracker2.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 
-namespace FireTracker.Models
+namespace FireTracker2.Models
 {
     public class Ticket
     {
         public int Id { get; set; }
-        [StringLength(20, ErrorMessage = "Title Must be between {2} and {1} Characters long.", MinimumLength =4)]
+        [StringLength(20, ErrorMessage = "Title Must be between {2} and {1} Characters long.", MinimumLength = 4)]
         public string Title { get; set; }
         [StringLength(50, ErrorMessage = "Description Must be between {2} and {1} Characters long.", MinimumLength = 3)]
         public string Description { get; set; }

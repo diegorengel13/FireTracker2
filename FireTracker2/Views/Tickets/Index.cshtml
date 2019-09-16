@@ -1,10 +1,10 @@
-﻿@model IEnumerable<FireTracker.Models.Ticket>
-@{
+﻿@{
     Layout = "~/Views/Shared/_NavShare.cshtml";
-}
-@{
     ViewBag.Title = "Index";
 }
+@using FireTracker2.Models;
+@model IEnumerable<Ticket>
+
 
 <h2>Index</h2>
 <section class="content">
@@ -14,7 +14,6 @@
             <div class="box">
                 <div class="box-header">
                     <h3 class="box-title">Tickets</h3>
-                    @Html.ActionLink("Create Project", "Create", "Projects")
                     @Html.ActionLink("Back to user index", "UserIndex", "Admin")
                     @Html.ActionLink("Create New Ticket", "Create", "Tickets")
                 </div>
@@ -56,48 +55,47 @@
                             </tr>
                         </thead>
                         <tbody>
-                           
-                                @foreach (var item in Model)
-                                {
-                                    <tr>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.AssignedToUser.FirstName)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.OwnerUser.FirstName)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Project.Name)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.TicketPriority.Name)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.TicketStatus.Name)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Title)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Description)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Created)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Updated)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.TicketType.Name)
-                                        </td>
-                                        <td>
-                                            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                                            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                                            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-                                        </td>
-                                    </tr>
-                                }
-                            
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.AssignedToUser.FirstName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.OwnerUser.FirstName)
+                                <td>
+                                </td>
+                                    @Html.DisplayFor(modelItem => item.Project.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TicketPriority.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TicketStatus.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Title)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Description)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Created)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Updated)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TicketType.Name)
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                                    @Html.ActionLink("Details", "Details", new { id = item.Id })|
+                                    @Html.ActionLink("Dashboard", "Dashboard", new { id = item.Id })|
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                                </td>
+                            </tr>
+                        }
                         </tbody>
                         <tfoot>
                             <tr>
@@ -144,6 +142,5 @@
     <!-- /.row -->
 </section>
 <p>
-    
-</p>
 
+</p>

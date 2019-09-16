@@ -9,7 +9,6 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using FireTracker2.Models;
-using Frogger_Blogger.Controllers;
 using System.IO;
 using System.Web.Configuration;
 

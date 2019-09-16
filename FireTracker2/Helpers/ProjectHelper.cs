@@ -1,5 +1,4 @@
-﻿using FireTracker.Models;
-using FireTracker2.Models;
+﻿using FireTracker2.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;

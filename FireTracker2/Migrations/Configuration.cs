@@ -177,34 +177,48 @@ namespace FireTracker2.Migrations
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data.
             context.TicketPriorities.AddOrUpdate(t => t.Name,
-                new FireTracker.Models.TicketPriority { Name = "Immediate", Description = "Ticket Requires Immediate Action"},
-                new FireTracker.Models.TicketPriority { Name = "High", Description = "Ticket Requires Attention ASAP" },
-                new FireTracker.Models.TicketPriority { Name = "Medium", Description = "Ticket needs assesing but no immediate action required" },
-                new FireTracker.Models.TicketPriority { Name = "Low", Description = "Ticket Does not require any imediate action" },
-                new FireTracker.Models.TicketPriority { Name = "None", Description = "No action required, ticket is only for update or information" }
+                new TicketPriority { Id = 1, Name = "Immediate", Description = "Ticket Requires Immediate Action"},
+                new TicketPriority { Id = 2, Name = "High", Description = "Ticket Requires Attention ASAP" },
+                new TicketPriority { Id = 3, Name = "Medium", Description = "Ticket needs assesing but no immediate action required" },
+                new TicketPriority { Id = 4, Name = "Low", Description = "Ticket Does not require any imediate action" },
+                new TicketPriority { Id = 5, Name = "None", Description = "No action required, ticket is only for update or information" }
                 );
 
             context.TicketStatus.AddOrUpdate(t => t.Name,
-                new FireTracker.Models.TicketStatus { Name = "Submitted/Unassigned" },
-                new FireTracker.Models.TicketStatus { Name = "Completed" },
-                new FireTracker.Models.TicketStatus { Name = "In Progress" },
-                new FireTracker.Models.TicketStatus { Name = "Submitted/Assigned" }
+                new TicketStatus { Id = 1, Name = "Submitted/Unassigned" },
+                new TicketStatus { Id = 2, Name = "Completed" },
+                new TicketStatus { Id = 3, Name = "In Progress" },
+                new TicketStatus { Id = 4, Name = "Submitted/Assigned" }
                 );
             context.TicketTypes.AddOrUpdate(t => t.Name,
-                new FireTracker.Models.TicketType
+                new TicketType
                 {
+                    Id = 5,
                     Name = "Bug",
                     Description = "An Error has occured in the project which has resulted in the application crashing or user is seeing an error message"
                 },
-                new FireTracker.Models.TicketType { Name = "Defect", Description = "information not being displayed correctly or functions are miscalculating" },
-                new FireTracker.Models.TicketType { Name = "Function Request", Description = "A request for a new function or feature has been requested" },
-                new FireTracker.Models.TicketType { Name = "Complaint", Description = "A general complaint has been made on the application" },
-                new FireTracker.Models.TicketType { Name = "Documentation Request", Description = "Request of documents on the application has been made" }
+                new TicketType { Id = 1, Name = "Defect", Description = "information not being displayed correctly or functions are miscalculating" },
+                new TicketType { Id = 2, Name = "Function Request", Description = "A request for a new function or feature has been requested" },
+                new TicketType { Id = 3, Name = "Complaint", Description = "A general complaint has been made on the application" },
+                new TicketType { Id = 4, Name = "Documentation Request", Description = "Request of documents on the application has been made" }
                 );
             context.Projects.AddOrUpdate(t => t.Name,
-                new Project { Name = "Frogger_Blogger", Description = "Blog Project" },
-                new Project { Name = "Portfolio", Description = "Personal Portfolio" },
-                new Project { Name = "Bug Tracker", Description = "Bug Tracker Project" });
+                new Project { Id = 1, Name = "Frogger_Blogger", Description = "Blog Project" },
+                new Project { Id = 2, Name = "Portfolio", Description = "Personal Portfolio" },
+                new Project { Id = 3, Name = "Bug Tracker", Description = "Bug Tracker Project" });
+            context.Tickets.AddOrUpdate(t => t.Title,
+                new Ticket { Title = "New Ticket", Description = "this is a new ticket", ProjectId = 1, TicketPriorityId = 5, TicketStatusId = 2, TicketTypeId = 1, Created = DateTime.Now },
+                new Ticket { Title = "New Ticket", Description = "this is a new ticket", ProjectId = 1, TicketPriorityId = 5, TicketStatusId = 2, TicketTypeId = 1, Created = DateTime.Now },
+                new Ticket { Title = "New Ticket", Description = "this is a new ticket", ProjectId = 1, TicketPriorityId = 3, TicketStatusId = 2, TicketTypeId = 2, Created = DateTime.Now },
+                new Ticket { Title = "New Ticket", Description = "this is a new ticket", ProjectId = 1, TicketPriorityId = 4, TicketStatusId = 2, TicketTypeId = 1, Created = DateTime.Now },
+                new Ticket { Title = "New Ticket", Description = "this is a new ticket", ProjectId = 2, TicketPriorityId = 5, TicketStatusId = 2, TicketTypeId = 5, Created = DateTime.Now },
+                new Ticket { Title = "New Ticket", Description = "this is a new ticket", ProjectId = 2, TicketPriorityId = 5, TicketStatusId = 2, TicketTypeId = 1, Created = DateTime.Now },
+                new Ticket { Title = "New Ticket", Description = "this is a new ticket", ProjectId = 3, TicketPriorityId = 5, TicketStatusId = 2, TicketTypeId = 4, Created = DateTime.Now },
+                new Ticket { Title = "New Ticket", Description = "this is a new ticket", ProjectId = 2, TicketPriorityId = 4, TicketStatusId = 2, TicketTypeId = 1, Created = DateTime.Now },
+                new Ticket { Title = "New Ticket", Description = "this is a new ticket", ProjectId = 2, TicketPriorityId = 3, TicketStatusId = 2, TicketTypeId = 3, Created = DateTime.Now }
+
+
+                );
             context.SaveChanges();
 
         }

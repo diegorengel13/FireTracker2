@@ -1,5 +1,4 @@
-﻿using FireTracker.Models;
-using FireTracker2.Models;
+﻿using FireTracker2.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

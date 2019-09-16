@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -20,11 +21,12 @@
     <Use64BitIISExpress />
     <IISExpressSSLPort>44327</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
-    <IISExpressWindowsAuthentication>enabled</IISExpressWindowsAuthentication>
+    <IISExpressWindowsAuthentication>disabled</IISExpressWindowsAuthentication>
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TypeScriptToolsVersion>3.5</TypeScriptToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -173,6 +175,7 @@
     <Compile Include="Classes\Valley.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\HighChartController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ProjectsController.cs" />
@@ -188,15 +191,17 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\DecisionHelper.cs" />
+    <Compile Include="Helpers\HistoryHelper.cs" />
     <Compile Include="Helpers\ImageUploadValidator.cs" />
     <Compile Include="Helpers\NotifyHelper.cs" />
     <Compile Include="Helpers\ProjectHelper.cs" />
+    <Compile Include="Helpers\ReuseHelper.cs" />
     <Compile Include="Helpers\TicketHelper.cs" />
     <Compile Include="ICommunicate.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Email.cs" />
+    <Compile Include="Models\HighBarChartData.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Project.cs" />
@@ -221,6 +226,7 @@
     <Content Include="Content\BoxTransition.css" />
     <Content Include="Content\BoxTransSemantic.css" />
     <Content Include="Content\dataTables.bootstrap.css" />
+    <Content Include="Content\fusiondesign.css" />
     <Content Include="Content\Modal.css" />
     <Content Include="Content\RandomImg.css" />
     <Content Include="Content\AdminLTE-bootstrap-social.css" />
@@ -236,8 +242,14 @@
     <Content Include="Content\jquery-jvectormap.css" />
     <Content Include="Content\skin-black.min.css" />
     <Content Include="Content\skin-blue.min.css" />
+    <Content Include="Content\ChartsForFun.css" />
     <Content Include="Content\_all-skins.css" />
     <Content Include="favicon.ico" />
+    <Content Include="FileExt\doc.png" />
+    <Content Include="FileExt\docx.png" />
+    <Content Include="FileExt\odt.png" />
+    <Content Include="FileExt\pdf.png" />
+    <Content Include="FileExt\txt.png" />
     <Content Include="fonts\font-awesome.css" />
     <Content Include="fonts\font-awesome.min.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -247,6 +259,12 @@
     <Content Include="Content\AdminLTE-bootstrap-social.min.css" />
     <Content Include="Content\AdminLTE-without-plugins.css" />
     <Content Include="gulpfile.js" />
+    <Content Include="Image\istockphoto-624179936-612x612.jpg" />
+    <Content Include="Scripts\Chart.js" />
+    <Content Include="Scripts\FireJs\fusioncharts.charts.js" />
+    <Content Include="Scripts\FireJs\fusioncharts.theme.carbon.js" />
+    <Content Include="Scripts\FireJs\jquery-fusioncharts.min.js" />
+    <Content Include="Scripts\HighChart.js" />
     <Content Include="Image\17924.jpg" />
     <Content Include="Image\19443_en_1.jpeg" />
     <Content Include="Image\294400.jpg" />
@@ -259,6 +277,7 @@
     <Content Include="Image\IgnorantAliveEagle-size_restricted.gif" />
     <Content Include="Image\Red-Carb.jpg" />
     <Content Include="Image\Yellow-Carb.jpg" />
+    <Content Include="JavaScript.js" />
     <Content Include="Scripts\jquery.dataTables.js" />
     <Content Include="Sounds\AH Ah Ah! you didnt say the magic word.mp3" />
     <Content Include="Uploads\Alex.png" />
@@ -283,6 +302,7 @@
     <Content Include="fonts\ionicons.ttf" />
     <Content Include="Scripts\Gulp\gulp.js.targets" />
     <Content Include="private.config" />
+    <Content Include="Content\BarChart.scss" />
     <None Include="Properties\PublishProfiles\FireTracker2 - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\FireJs\adminlte.min.js" />
@@ -419,11 +439,14 @@
     <Content Include="Views\Tickets\Dashboard.cshtml" />
     <Content Include="Views\Account\_DemoPartial.cshtml" />
     <Content Include="Views\Home\Unauthorized.cshtml" />
+    <Content Include="Views\Shared\_CoolGraphView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Attachments\" />
     <Folder Include="Projects\" />
+    <Folder Include="TixAttachments\" />
+    <Folder Include="Views\Foo\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -434,11 +457,18 @@
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="Scripts\file1.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
   <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">

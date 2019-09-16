@@ -1,5 +1,4 @@
-﻿using FireTracker.Models;
-using FireTracker2.Models;
+﻿using FireTracker2.Models;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
@@ -73,8 +72,8 @@ namespace FireTracker2.Helpers
             var messageBody = new StringBuilder();
             foreach(var property in WebConfigurationManager.AppSettings["TrackedTicketProperties"].Split(','))
             {
-                var oldValue = oldTicket.GetType().GetProperty(property).GetValue(oldTicket, null);
-                var newValue = newTicket.GetType().GetProperty(property).GetValue(newTicket, null);
+                var oldValue = oldTicket.GetType().GetProperty(property).GetValue(oldTicket, null).ToString();
+                var newValue = newTicket.GetType().GetProperty(property).GetValue(newTicket, null).ToString();
                 if(oldValue != newValue)
                 {
                     messageBody.AppendLine(new String('-', 45));

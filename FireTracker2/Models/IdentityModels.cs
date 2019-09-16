@@ -3,7 +3,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using FireTracker.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
@@ -61,14 +60,14 @@ namespace FireTracker2.Models
             return new ApplicationDbContext();
         }
        
-        public System.Data.Entity.DbSet<FireTracker.Models.TicketAttachment> TicketAttachments { get; set; }
-        public System.Data.Entity.DbSet<FireTracker.Models.Ticket> Tickets { get; set; }
+        public System.Data.Entity.DbSet<FireTracker2.Models.TicketAttachment> TicketAttachments { get; set; }
+        public System.Data.Entity.DbSet<FireTracker2.Models.Ticket> Tickets { get; set; }
         public System.Data.Entity.DbSet<FireTracker2.Models.Project> Projects { get; set; }
-        public System.Data.Entity.DbSet<FireTracker.Models.TicketPriority> TicketPriorities { get; set; }
-        public System.Data.Entity.DbSet<FireTracker.Models.TicketStatus> TicketStatus { get; set; }
-        public System.Data.Entity.DbSet<FireTracker.Models.TicketComment> TicketComments { get; set; }
-        public System.Data.Entity.DbSet<FireTracker.Models.TicketHistory> TicketHistories { get; set; }
-        public System.Data.Entity.DbSet<FireTracker.Models.TicketType> TicketTypes { get; set; }
-        public System.Data.Entity.DbSet<FireTracker.Models.TicketNotification> TicketNotifications { get; set; }
+        public System.Data.Entity.DbSet<FireTracker2.Models.TicketPriority> TicketPriorities { get; set; }
+        public System.Data.Entity.DbSet<FireTracker2.Models.TicketStatus> TicketStatus { get; set; }
+        public System.Data.Entity.DbSet<FireTracker2.Models.TicketComment> TicketComments { get; set; }
+        public System.Data.Entity.DbSet<FireTracker2.Models.TicketHistory> TicketHistories { get; set; }
+        public System.Data.Entity.DbSet<FireTracker2.Models.TicketType> TicketTypes { get; set; }
+        public System.Data.Entity.DbSet<FireTracker2.Models.TicketNotification> TicketNotifications { get; set; }
     }
 }

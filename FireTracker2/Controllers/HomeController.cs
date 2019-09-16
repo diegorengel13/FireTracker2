@@ -23,7 +23,7 @@ namespace FireTracker2.Controllers
                 try
                 {
                     var body = "<p>Email From:<bold>{0}</bold>({1})</p><p>Message:</p>";
-                    var from = "FireTracker<Admin@Firetracker.com>";
+                    var from = "FireTracker2<Admin@Firetracker.com>";
                     model.Body = "This Message is from bug tracker";
                     var email = new MailMessage(from, ConfigurationManager.AppSettings["emailto"])
                     {

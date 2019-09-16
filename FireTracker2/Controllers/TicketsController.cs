@@ -6,7 +6,6 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using FireTracker.Models;
 using FireTracker2.Helpers;
 using FireTracker2.Models;
 using Microsoft.AspNet.Identity;
@@ -21,10 +20,14 @@ namespace FireTracker2.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
 
-        public ActionResult Dashboard()
+        public ActionResult Dashboard(int? id)
         {
-           
-            return View();
+            var ticket = db.Tickets.Find(id);
+            if(ticket == null)
+            {
+                return HttpNotFound();
+            }
+            return View(ticket);
         }
         // GET: Tickets
         public ActionResult Index()
@@ -90,9 +93,10 @@ namespace FireTracker2.Controllers
         {
             if (ModelState.IsValid)
             {
+               
                 ticket.Created = DateTime.Now;
                 ticket.OwnerUserId = User.Identity.GetUserId();
-                ticket.TicketStatusId = db.TicketStatus.FirstOrDefault(t => t.Name == "Submitted/Unassigned").Id; 
+                ticket.TicketStatusId = db.TicketStatus.FirstOrDefault(t => t.Name == "Submitted/Unassigned").Id;
                 db.Tickets.Add(ticket);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -134,16 +138,17 @@ namespace FireTracker2.Controllers
         [NoAuthorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Title,Description,ProjectId,TicketTypeId,TicketPriorityId,TicketStatusId,AssignedToUserId,OwnerUserId")] Ticket ticket)
+        public ActionResult Edit([Bind(Include = "Id,Title,Description,ProjectId,TicketTypeId,TicketPriorityId,TicketStatusId,AssignedToUserId,OwnerUserId,Created")] Ticket ticket)
         {
            
             if (ModelState.IsValid)
             {
-                var switchid = TicketHelper.IdSwitch("TicketTypeId","Id");
                 var oldTicket = db.Tickets.AsNoTracking().FirstOrDefault(t => t.Id == ticket.Id);
                 db.Entry(ticket).State = EntityState.Modified;
-                db.SaveChanges();
+                ticket.Updated = DateTime.Now;
                 NotifyHelper.ManageNotification(oldTicket, ticket);
+                HistoryHelper.SaveHistory(oldTicket, ticket);
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
             ViewBag.AssignedToUserId = new SelectList(db.Users, "Id", "FullName", ticket.AssignedToUserId);

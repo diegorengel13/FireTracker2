@@ -1,5 +1,4 @@
-﻿using FireTracker.Models;
-using FireTracker2.Enumerators;
+﻿using FireTracker2.Enumerators;
 using FireTracker2.Models;
 using Microsoft.AspNet.Identity;
 using System;
@@ -63,16 +62,7 @@ namespace FireTracker2.Helpers
             }
          
         }
-        public static string IdSwitch(string id, string value)
-        {
-            switch (id)
-            {
-                case "TicketTypeId":
-                    return db.TicketTypes.Find(Convert.ToInt32(value)).Name;
-                default:
-                    return value;
-            }
-        }
+  
 
     }
 }

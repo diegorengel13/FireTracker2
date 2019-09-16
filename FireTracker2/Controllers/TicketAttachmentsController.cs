@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using FireTracker.Models;
 using FireTracker2.Models;
+using Microsoft.AspNet.Identity;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FireTracker2.Controllers
 {
@@ -49,17 +51,28 @@ namespace FireTracker2.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,TicketId,Title,FilePath,Description,Created,UserId,FileUrl")] TicketAttachment ticketAttachment)
+        public ActionResult Create([Bind(Include = "TicketId")] TicketAttachment model, string attachmentTitle, string attachmentDescription, HttpPostedFileBase fileAttachment)
         {
             if (ModelState.IsValid)
             {
-                db.TicketAttachments.Add(ticketAttachment);
+                model.Title = attachmentTitle;
+                model.Description = attachmentDescription;
+                model.Created = DateTime.Now;
+                model.UserId = User.Identity.GetUserId();
+                if (ImageUploadValidator.IsAttachmentValid(fileAttachment))
+                {
+                    var filename = Path.GetFileName(fileAttachment.FileName);
+                    fileAttachment.SaveAs(Path.Combine(Server.MapPath("~/TixAttachments/"), filename));
+                    model.FileUrl = "/TixAttachments/" + filename;
+                }
+                db.TicketAttachments.Add(model);
                 db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+                return RedirectToAction("Index","Tickets");
 
-            ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Title", ticketAttachment.TicketId);
-            return View(ticketAttachment);
+            }
+            ViewBag.TicketId = new SelectList(db.Tickets, "Id", "OwnerUserId", model.TicketId);
+            ViewBag.UserId = new SelectList(db.Tickets, "Id", "FirstName", model.TicketId);
+            return View(model);
         }
 
         // GET: TicketAttachments/Edit/5

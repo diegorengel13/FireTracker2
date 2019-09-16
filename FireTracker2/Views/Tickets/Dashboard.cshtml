@@ -1,99 +1,236 @@
 ﻿@using FireTracker2.Helpers
-
-@model FireTracker.Models.Ticket
+@using FireTracker2.Controllers
+@model FireTracker2.Models.Ticket
 @{
     Layout = "~/Views/Shared/_NavShare.cshtml";
     ViewBag.Title = "Details";
 }
 
+<style>
+    .textarea {
+        color: green !important;
+        background-color: black !important;
+    }
 
-<div class="box box-solid bg-light-blue-gradient">
-    <div class="box-header">
-        <!-- tools box -->
-        <div class="pull-right box-tools">
-            <button type="button" class="btn btn-primary btn-sm daterange pull-right" data-toggle="tooltip"
-                    title="Date range">
-                <i class="fa fa-calendar"></i>
-            </button>
-            <button type="button" class="btn btn-primary btn-sm pull-right" data-widget="collapse"
-                    data-toggle="tooltip" title="Collapse" style="margin-right: 5px;">
-                <i class="fa fa-minus"></i>
-            </button>
+    .row {
+        margin-right: -15px;
+        margin-left: -3px;
+    }
+
+    a {
+        color: #121414;
+    }
+
+    .fileUrlsize {
+        max-height: 50px;
+        max-width: 60px;
+    }
+</style>
+
+<div class="col-md-4">
+    <div class="box box-solid bg-light-blue-gradient">
+        <div class="box-header">
+            <!-- tools box -->
+            <div class="pull-right box-tools">
+                <button type="button" class="btn btn-primary btn-sm daterange pull-right" data-toggle="tooltip"
+                        title="Date range">
+                    <i class="fa fa-calendar"></i>
+                </button>
+                <button type="button" class="btn btn-primary btn-sm pull-right" data-widget="collapse"
+                        data-toggle="tooltip" title="Collapse" style="margin-right: 5px;">
+                    <i class="fa fa-minus"></i>
+                </button>
+            </div>
+            <!-- /. tools -->
+
+            <i class="fa fa-map-marker"></i>
+
+            <h3 class="box-title">
+                Attachments
+            </h3>
         </div>
-        <!-- /. tools -->
+        <div class="box-body">
+            @if (TicketHelper.TicketIsEditableByUser(Model))
+            {
+                using (Html.BeginForm("Create", "TicketAttachments", FormMethod.Post, new { enctype = "Multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.Hidden("TicketId", Model.Id)
+                    <div class="row">
+                        <div class="col-md-6">
+                            @Html.TextBox("AttachmentTitle", null, new { @class = "form-control textarea", rows = 5, cols = 150, placeholder = "Title" })
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-6">
+                            @Html.TextArea("AttachmentDescription", null, new { @class = "form-control textarea", rows = 5, cols = 150, placeholder = "Description" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 ">
+                            <input name="fileAttachment" type="file" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <button type="submit" class="btn btn-success">Add</button>
+                        </div>
+                    </div>
 
-        <i class="fa fa-map-marker"></i>
-
-        <h3 class="box-title">
-            Visitors
-        </h3>
-    </div>
-    <div class="box-body">
-        @*@if (DecisionHelper.IsTicketEditableByUser(Model))
-        {
-
-        }*@
-        @foreach (var attachment in Model.TicketAttachments)
-        {
-        <div class="row">
-            <div class="col-md-4">
+                }
+            }
+            @foreach (var attachment in Model.TicketAttachments)
+            {
                 <div class="row">
-                    <div class="col-md-12">
-
+                    <div class="col-md-4">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <img src="@ImageUploadValidator.GetFileExtIco(attachment.FileUrl)" class="fileUrlsize" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <a target="_blank" href="@attachment.FileUrl">@Path.GetFileName(attachment.FileUrl)</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="row">
+                            <div class="col-md-6">
+                                @attachment.Created.ToString("MM dd,yyyy")
+                            </div>
+                            <div class="col-md-6">
+                                @attachment.User.FullName
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                @attachment.Title
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                @attachment.Description
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <a target="_blank" href="@attachment.FileUrl">@Path.GetFileName(attachment.FileUrl)</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-8">
-                <div class="row">
-                    <div class="col-md-6">
-                        @attachment.Created.ToString("MM dd,yyyy")
-                    </div>
-                    <div class="col-md-6">
-                        @attachment.User.FullName
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        @attachment.Title
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        @attachment.Description
-                    </div>
-                </div>
-            </div>
+                <hr />
+            }
         </div>
-        }
+       
 
-    </div>
-    <!-- /.box-body-->
-    <div class="box-footer no-border">
-        <div class="row">
-            <div class="col-xs-4 text-center" style="border-right: 1px solid #f4f4f4">
-                <div id="sparkline-1"></div>
-                <div class="knob-label">Visitors</div>
+
+        <!-- /.box-body-->
+        <div class="box-footer no-border">
+            <div class="row">
+                <div class="col-xs-4 text-center" style="border-right: 1px solid #f4f4f4">
+                    <div id="sparkline-1"></div>
+                    <div class="knob-label"></div>
+                </div>
+                <!-- ./col -->
+                <div class="col-xs-4 text-center" style="border-right: 1px solid #f4f4f4">
+                    <div id="sparkline-2"></div>
+                    <div class="knob-label"></div>
+                </div>
+                <!-- ./col -->
+                <div class="col-xs-4 text-center">
+                    <div id="sparkline-3"></div>
+                    <div class="knob-label"></div>
+                </div>
+                <!-- ./col -->
             </div>
-            <!-- ./col -->
-            <div class="col-xs-4 text-center" style="border-right: 1px solid #f4f4f4">
-                <div id="sparkline-2"></div>
-                <div class="knob-label">Online</div>
-            </div>
-            <!-- ./col -->
-            <div class="col-xs-4 text-center">
-                <div id="sparkline-3"></div>
-                <div class="knob-label">Exists</div>
-            </div>
-            <!-- ./col -->
+            <!-- /.row -->
         </div>
-        <!-- /.row -->
     </div>
 </div>
+<div class="col-md-4">
+    <div class="box box-solid bg-light-blue-gradient">
+        <div class="box-header">
+            <!-- tools box -->
+            <div class="pull-right box-tools">
+                <button type="button" class="btn btn-primary btn-sm daterange pull-right" data-toggle="tooltip"
+                        title="Date range">
+                    <i class="fa fa-calendar"></i>
+                </button>
+                <button type="button" class="btn btn-primary btn-sm pull-right" data-widget="collapse"
+                        data-toggle="tooltip" title="Collapse" style="margin-right: 5px;">
+                    <i class="fa fa-minus"></i>
+                </button>
+            </div>
+            <!-- /. tools -->
+
+            <i class="fa fa-map-marker"></i>
+
+            <h3 class="box-title">
+                History
+            </h3>
+        </div>
+        <div class="box-body">
+            @foreach (var history in Model.TicketHistories)
+            {
+                <div class="row">
+                    @*<div class="col-md-4">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <img src="@ImageUploadValidator.GetFileExtIco(attachment.FileUrl)" class="fileUrlsize" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <a target="_blank" href="@attachment.FileUrl">@Path.GetFileName(attachment.FileUrl)</a>
+                            </div>
+                        </div>
+                    </div>*@
+                    <div class="col-md-8">
+                        <div class="row">
+                            <div class="col-md-6">
+                                @history.Updated
+                            </div>
+                            <div class="col-md-6">
+                                @history.TicketId
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                @*@history.*@
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                @*@attachment.Description*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+            }
+        </div>
+        <!-- /.box-body-->
+        <div class="box-footer no-border">
+            <div class="row">
+                <div class="col-xs-4 text-center" style="border-right: 1px solid #f4f4f4">
+                    <div id="sparkline-1"></div>
+                    <div class="knob-label"></div>
+                </div>
+                <!-- ./col -->
+                <div class="col-xs-4 text-center" style="border-right: 1px solid #f4f4f4">
+                    <div id="sparkline-2"></div>
+                    <div class="knob-label"></div>
+                </div>
+                <!-- ./col -->
+                <div class="col-xs-4 text-center">
+                    <div id="sparkline-3"></div>
+                    <div class="knob-label"></div>
+                </div>
+                <!-- ./col -->
+            </div>
+            <!-- /.row -->
+        </div>
+    </div>
+</div>
+
 
 @foreach (var attachment in Model.TicketAttachments)
 {

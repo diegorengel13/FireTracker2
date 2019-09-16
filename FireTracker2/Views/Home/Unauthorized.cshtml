@@ -18,14 +18,20 @@
     <title>Unauthorized</title>
 </head>
 <body>
-    <div>
-        <img width="1500" height="800" src="~/Image/IgnorantAliveEagle-size_restricted.gif" />
-
+    <div class="row">
+        <div class="col-md-12">
+            <p>You are not authorized to access this page. Please contact your Admin if you believe this is an error</p>
+            <div class="row">
+                <div class="col-md-12">
+                    @Html.ActionLink("Login", "Account");
+                </div>
+            </div>
+        @*<img width="1500" height="800" src="~/Image/IgnorantAliveEagle-size_restricted.gif" />
         <audio id="noaccess" src="/Sounds/AH%20Ah%20Ah!%20you%20didnt%20say%20the%20magic%20word.mp3" type="audio/mpeg" controls autoplay hidden="true">
                 <source src="/Sounds/AH%20Ah%20Ah!%20you%20didnt%20say%20the%20magic%20word.mp3" type="audio/mpeg" />
         </audio>
-     
-        <p id="demo"></p>
+        <p id="demo"></p>*@
+        </div>
     </div>
 </body>
 </html>

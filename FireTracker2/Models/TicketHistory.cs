@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace FireTracker.Models
+namespace FireTracker2.Models
 {
     public class TicketHistory
     {
@@ -12,10 +12,10 @@ namespace FireTracker.Models
         public string PropertyName { get; set; }
         public string OldValue { get; set; }
         public string NewValue { get; set; }
-        public DateTime Updated { get; set; }
+        public DateTime? Updated { get; set; }
         public virtual Ticket Ticket { get; set; }
+        public string UserId { get; set; }
 
-        
 
     }
 }
