@@ -262,6 +262,7 @@
     <Content Include="Image\istockphoto-624179936-612x612.jpg" />
     <Content Include="Scripts\Chart.js" />
     <Content Include="Scripts\FireJs\fusioncharts.charts.js" />
+    <Content Include="Scripts\FireJs\fusioncharts.js" />
     <Content Include="Scripts\FireJs\fusioncharts.theme.carbon.js" />
     <Content Include="Scripts\FireJs\jquery-fusioncharts.min.js" />
     <Content Include="Scripts\HighChart.js" />

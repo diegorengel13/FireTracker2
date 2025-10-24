@@ -2,7 +2,39 @@
     Layout = "~/Views/Shared/_NavShare.cshtml";
 }
 <!DOCTYPE html>
-
+<style>
+    .fill {
+   
+        fill: transparent !important;
+        background-color: rgba(0, 0, 0, 0) !important;
+    }
+    rect[Attributes Style] {
+        x: 0;
+        y: 0;
+        width: 336;
+        height: 300;
+        stroke: none;
+        fill-opacity: 1;
+        fill: transparent;
+        ry: 0;
+        rx: 0;
+    }
+    .card .pie {
+        will-change: height;
+        /* width: 15px; */
+        height: 1px;
+        background-color: transparent !important;
+        transform: translateX(-7.5px) rotateX(-90deg) rotateY(-45deg);
+        transform-origin: 100% 100%;
+        transition: height 0.5s ease-in-out, margin 0.5s ease-in-out, transform 0.5s ease-in-out;
+        transform-style: preserve-3d;
+        transform: rotateX(270deg);
+        /* margin: 6px; */
+        position: relative;
+    }
+    
+    /* background: linear-gradient(to bottom, #feffff 0%, #ddf1f9 0%, #a0d8ef 100%);
+</style>
 <link href="~/Content/ChartsForFun.css" rel="stylesheet" />
 <!-- Left side column. contains the logo and sidebar -->
 <!-- Content Wrapper. Contains page content -->
@@ -24,7 +56,7 @@
                     <div class="pad">
                         <!-- Map will be created here -->
                         <div class="background">
-                            <div onclick="" class="card">
+                            <div  class="card">
                                 <div class="photo"></div>
                                 <h2>TICKET PRIORITIES</h2>
                                 <p>by Amount in Project</p>
@@ -60,7 +92,7 @@
                                 <h2>TICKET Status</h2>
                                 <p>by Percent in Project</p>
                                 <div class="chart">
-
+                                    <div id="fusionchart" class="fill pie" style="height:300px; background-color:transparent; fill:transparent;"></div>
                                 </div>
                             </div>
 
@@ -98,7 +130,7 @@
                         <div class="col-md-9 col-sm-8">
                             <div class="pad">
                                 <!-- Map will be created here -->
-                                <div id="fusionchart"></div>
+                              
                             </div>
                         </div>
                         <!-- /.col -->
@@ -486,7 +518,7 @@
         $(function () {
             var url = '@Url.Action("GetHighPieData", "HighChart")';
             $.post(url).then(function (response) {
-                var chart = new Fusion.Pie({
+                var chart = new FusionCharts({
                     type: "pie3d",
                     renderAt:"fusionchart",
                     width: "100%",
@@ -498,11 +530,12 @@
                             subcaption: "",
                             xAxisName: "label",
                             yAxisName: "value",
-                           
+                            bgColor: "#DDDDDD",
+                            bgAlpha:"50",
                             numberSuffix: "",
                             theme: "fusion"
                         },
-                        "data": [response]
+                        "data": response
 
                     }
                 }).render();

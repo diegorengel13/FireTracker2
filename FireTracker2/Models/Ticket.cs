@@ -35,7 +35,6 @@ namespace FireTracker2.Models
         public virtual TicketPriority TicketPriority { get; set; }
         public virtual ApplicationUser OwnerUser { get; set; }
         public virtual ApplicationUser AssignedToUser { get; set; }
-      
         public virtual ICollection<TicketComment> TicketComments { get; set; }
         public virtual ICollection<TicketHistory> TicketHistories { get; set; }
         public virtual ICollection<TicketAttachment> TicketAttachments { get; set; }
